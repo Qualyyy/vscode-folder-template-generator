@@ -27,6 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const selectedStructureName = await vscode.window.showQuickPick(structureNames, { placeHolder: 'Select a structure' });
 		const selectedStructure = structures.find(s => s.name === selectedStructureName);
 		vscode.window.showInformationMessage(selectedStructure.name);
+
 		for (const item of selectedStructure.structure) {
 			const fileName = item.fileName;
 			const fileTemplate = item.template;
@@ -42,8 +43,15 @@ export function activate(context: vscode.ExtensionContext) {
 				continue;
 			}
 
+			let fileContent = '';
+			const fileTemplates = config.get<Record<string, string[]>>('templates') || {};
+			const contentParts = fileTemplates[fileTemplate];
+			if (contentParts) {
+				fileContent = contentParts.join('\n');
+			}
+
 			fs.mkdirSync(path.dirname(filePath), { recursive: true });
-			fs.writeFileSync(filePath, '');
+			fs.writeFileSync(filePath, fileContent);
 		};
 
 	});

@@ -67,7 +67,7 @@
             },
             "default": []
           },
-          "folderTemplateGenerator.fileTemplates": {
+          "folderTemplateGenerator.templates": {
             "type": "object",
             "additionalProperties": {
               "type": "array",
