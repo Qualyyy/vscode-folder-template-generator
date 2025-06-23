@@ -12,44 +12,56 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('folder-template-generator.generateTemplate', async () => {
 		const config = vscode.workspace.getConfiguration('folderTemplateGenerator');
 		const structures = config.get<any[]>('structures') || [];
+		const fileTemplates = config.get<Record<string, string[]>>('templates') || {};
 
+		// Exit if user hasn't created any structures
 		if (structures.length === 0) {
-			vscode.window.showErrorMessage('Please create a template first.');
+			vscode.window.showErrorMessage('Please create a structure first.');
 			return;
 		}
+
+		// Exit if no opened folder
 		if (!vscode.workspace.workspaceFolders) {
 			vscode.window.showErrorMessage('No folder open');
 			return;
 		}
+
+		// Get the current workspace folder
 		const workspacePath = vscode.workspace.workspaceFolders[0].uri.fsPath;
 
 		const structureNames = structures.map(structure => structure.name);
+
+		// Prompt user to select a structure
 		const selectedStructureName = await vscode.window.showQuickPick(structureNames, { placeHolder: 'Select a structure' });
 		const selectedStructure = structures.find(s => s.name === selectedStructureName);
-		vscode.window.showInformationMessage(selectedStructure.name);
 
+		// Create a new file/folder for every item in the structure
 		for (const item of selectedStructure.structure) {
 			const fileName = item.fileName;
 			const fileTemplate = item.template;
-
 			const filePath = path.join(workspacePath, fileName);
+
+			// Skip items that exist
 			if (fs.existsSync(filePath)) {
 				vscode.window.showInformationMessage(`${fileName} already exists, skipping...`);
 				continue;
 			}
 
+			// Item is a folder
 			if (fileTemplate === 'folder') {
 				fs.mkdirSync(filePath, { recursive: true });
 				continue;
 			}
 
+			// Item is a file
 			let fileContent = '';
-			const fileTemplates = config.get<Record<string, string[]>>('templates') || {};
+			// Make content match the template
 			const contentParts = fileTemplates[fileTemplate];
 			if (contentParts) {
 				fileContent = contentParts.join('\n');
 			}
 
+			// Create the file
 			fs.mkdirSync(path.dirname(filePath), { recursive: true });
 			fs.writeFileSync(filePath, fileContent);
 		};
