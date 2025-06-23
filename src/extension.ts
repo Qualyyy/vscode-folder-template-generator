@@ -35,6 +35,12 @@ export function activate(context: vscode.ExtensionContext) {
 		const selectedStructureName = await vscode.window.showQuickPick(structureNames, { placeHolder: 'Select a structure' });
 		const selectedStructure = structures.find(s => s.name === selectedStructureName);
 
+		const variables: { [key: string]: string } = {};
+		for (const variable of selectedStructure.variables) {
+			const value = await vscode.window.showInputBox({ prompt: variable }) || '';
+			variables[variable] = value;
+		}
+
 		// Create a new file/folder for every item in the structure
 		for (const item of selectedStructure.structure) {
 			const fileName = item.fileName;
@@ -54,11 +60,19 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 
 			// Item is a file
+
 			let fileContent = '';
+
 			// Make content match the template
 			const contentParts = fileTemplates[fileTemplate];
 			if (contentParts) {
 				fileContent = contentParts.join('\n');
+
+				// Replace variables with correct value
+				for (const key in variables) {
+					const searchKey = '[' + key + ']';
+					fileContent = fileContent.replaceAll(searchKey, variables[key]);
+				}
 			}
 
 			// Create the file
