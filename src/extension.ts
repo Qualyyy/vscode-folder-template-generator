@@ -17,11 +17,22 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.window.showErrorMessage('Please create a template first.');
 			return;
 		}
+		if (!vscode.workspace.workspaceFolders) {
+			vscode.window.showErrorMessage('No folder open');
+			return;
+		}
+		const workspacePath = vscode.workspace.workspaceFolders[0].uri.fsPath;
 
 		const structureNames = structures.map(structure => structure.name);
 		const selectedStructureName = await vscode.window.showQuickPick(structureNames, { placeHolder: 'Select a structure' });
 		const selectedStructure = structures.find(s => s.name === selectedStructureName);
 		vscode.window.showInformationMessage(selectedStructure.name);
+		for (const item of selectedStructure.structure) {
+			const fileName = item.fileName;
+			const filePath = path.join(workspacePath, fileName);
+			fs.mkdirSync(path.dirname(filePath), { recursive: true });
+			fs.writeFileSync(filePath, '');
+		};
 
 	});
 
