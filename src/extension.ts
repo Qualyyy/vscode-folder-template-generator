@@ -30,6 +30,10 @@ export function activate(context: vscode.ExtensionContext) {
 		for (const item of selectedStructure.structure) {
 			const fileName = item.fileName;
 			const filePath = path.join(workspacePath, fileName);
+			if (fs.existsSync(filePath)) {
+				vscode.window.showInformationMessage(`${fileName} already exists, skipping...`);
+				continue;
+			}
 			fs.mkdirSync(path.dirname(filePath), { recursive: true });
 			fs.writeFileSync(filePath, '');
 		};
