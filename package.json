@@ -26,7 +26,50 @@
           "group": "navigation"
         }
       ]
-    }
+    },
+    "configuration": [
+      {
+        "title": "Folder Template Generator",
+        "properties": {
+          "folderTemplateGenerator.structures": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "structure"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "variables": {
+                  "type": "array"
+                },
+                "structure": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "fileName"
+                    ],
+                    "properties": {
+                      "fileName": {
+                        "type": "string"
+                      },
+                      "template": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "default": []
+          }
+        }
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
