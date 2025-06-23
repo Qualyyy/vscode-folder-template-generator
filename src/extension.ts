@@ -29,11 +29,19 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.showInformationMessage(selectedStructure.name);
 		for (const item of selectedStructure.structure) {
 			const fileName = item.fileName;
+			const fileTemplate = item.template;
+
 			const filePath = path.join(workspacePath, fileName);
 			if (fs.existsSync(filePath)) {
 				vscode.window.showInformationMessage(`${fileName} already exists, skipping...`);
 				continue;
 			}
+
+			if (fileTemplate === 'folder') {
+				fs.mkdirSync(filePath, { recursive: true });
+				continue;
+			}
+
 			fs.mkdirSync(path.dirname(filePath), { recursive: true });
 			fs.writeFileSync(filePath, '');
 		};
