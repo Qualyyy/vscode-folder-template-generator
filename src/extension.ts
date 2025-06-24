@@ -14,6 +14,7 @@ export function activate(context: vscode.ExtensionContext) {
 		// Get the target path
 
 		let targetPath = '';
+		let createNewFolder = false;
 		// User right clicks a folder
 		if (Uri && Uri.fsPath) {
 			targetPath = Uri.fsPath;
@@ -33,6 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
 			const parentFolderUri = await vscode.window.showOpenDialog(options);
 			if (parentFolderUri && parentFolderUri[0]) {
 				targetPath = parentFolderUri[0].fsPath;
+				createNewFolder = true;
 			}
 			else {
 				vscode.window.showErrorMessage('No folder selected');
@@ -58,6 +60,24 @@ export function activate(context: vscode.ExtensionContext) {
 		const selectedStructure = structures.find(s => s.name === selectedStructureName);
 
 		const structureVariables = selectedStructure.variables;
+
+		// Ask user if they want to create a new folder
+		if (!createNewFolder) {
+			createNewFolder = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: 'Create a new folder?' }) === 'Yes';
+		}
+
+		// Create new folder and change target path if createNewFolder is true
+		if (createNewFolder) {
+			do {
+				const folderName = await vscode.window.showInputBox({ placeHolder: 'folderName', value: selectedStructureName });
+				if (!folderName) { return; }
+				targetPath = path.join(targetPath, folderName);
+				if (fs.existsSync(targetPath)) {
+					vscode.window.showErrorMessage(`Folder "${folderName}" already exists. Please choose another name.`);
+				}
+			} while (fs.existsSync(targetPath));
+			fs.mkdirSync(targetPath);
+		}
 
 		// Check variables
 		const variables: { [key: string]: string } = {};
@@ -149,6 +169,13 @@ export function activate(context: vscode.ExtensionContext) {
 			fs.mkdirSync(path.dirname(filePath), { recursive: true });
 			fs.writeFileSync(filePath, fileContent);
 		};
+
+		if (createNewFolder) {
+			const openNewFolder = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `Open new folder?` }) === 'Yes';
+			if (openNewFolder) {
+				vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(targetPath), true);
+			}
+		}
 
 	});
 
