@@ -63,6 +63,9 @@
                       },
                       "template": {
                         "type": "string"
+                      },
+                      "optional": {
+                        "type": "string"
                       }
                     }
                   }

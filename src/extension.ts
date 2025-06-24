@@ -41,13 +41,33 @@ export function activate(context: vscode.ExtensionContext) {
 			variables[variable] = value;
 		}
 
+		const optionals: { [key: string]: boolean } = {};
+		for (const item of selectedStructure.structure) {
+			if (item.optional && !(item.optional in optionals)) {
+				const addItem = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `${item.optional}?` }) === 'Yes';
+				if (addItem) {
+					optionals[item.optional] = true; // Add these items
+					continue;
+				}
+				optionals[item.optional] = false; // Don't add these items
+			}
+		}
+
 		// Create a new file/folder for every item in the structure
 		for (const item of selectedStructure.structure) {
 			const fileName = item.fileName;
 			const fileTemplate = item.template;
 			const filePath = path.join(workspacePath, fileName);
 
-			// Skip items that exist
+			// Skip item if optional true
+			if (item.optional) {
+				if (!optionals[item.optional]) {
+					vscode.window.showInformationMessage(`Skipped ${fileName}`);
+					continue;
+				}
+			}
+
+			// Skip items if exists
 			if (fs.existsSync(filePath)) {
 				vscode.window.showInformationMessage(`${fileName} already exists, skipping...`);
 				continue;
