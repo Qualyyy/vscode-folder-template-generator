@@ -23,11 +23,11 @@
       }
     ],
     "menus": {
-      "editor/context": [
+      "explorer/context": [
         {
           "command": "folder-template-generator.generateTemplate",
           "when": "explorerResourceIsFolder",
-          "group": "navigation"
+          "group": "navigation@9"
         }
       ]
     },
