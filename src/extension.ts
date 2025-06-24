@@ -36,12 +36,16 @@ export function activate(context: vscode.ExtensionContext) {
 		if (!selectedStructureName) { return; }
 		const selectedStructure = structures.find(s => s.name === selectedStructureName);
 
+		const structureVariables = selectedStructure.variables;
+
 		// Check variables
 		const variables: { [key: string]: string } = {};
-		for (const variable of selectedStructure.variables) {
-			const value = await vscode.window.showInputBox({ prompt: variable });
-			if (!value) { return; }
-			variables[variable] = value;
+		if (structureVariables) {
+			for (const variable of structureVariables) {
+				const value = await vscode.window.showInputBox({ prompt: variable });
+				if (!value) { return; }
+				variables[variable] = value;
+			}
 		}
 
 		// Check optional values
@@ -112,9 +116,11 @@ export function activate(context: vscode.ExtensionContext) {
 				fileContent = filteredParts.join('\n');
 
 				// Replace variables with correct value
-				for (const key in variables) {
-					const searchKey = '[' + key + ']';
-					fileContent = fileContent.replaceAll(searchKey, variables[key]);
+				if (variables) {
+					for (const key in variables) {
+						const searchKey = '[' + key + ']';
+						fileContent = fileContent.replaceAll(searchKey, variables[key]);
+					}
 				}
 			}
 
