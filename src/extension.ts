@@ -4,8 +4,25 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+function isValidFolderName(name: string): boolean {
+	// Forbidden characters on Windows: \ / : * ? " < > |
+	// Forbidden on macOS/Linux: /
+	// Also disallow empty string, trailing spaces or dots (Windows), and reserved names (Windows)
+	const forbidden = /[\\\/:\*\?"<>\|]/;
+	const reservedNames = [
+		'CON', 'PRN', 'AUX', 'NUL',
+		'COM1', 'COM2', 'COM3', 'COM4', 'COM5', 'COM6', 'COM7', 'COM8', 'COM9',
+		'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9'
+	];
+
+	if (!name || name.trim().length === 0) { return false; }
+	if (forbidden.test(name)) { return false; }
+	if (name.endsWith(' ') || name.endsWith('.')) { return false; }
+	if (reservedNames.includes(name.toUpperCase())) { return false; }
+
+	return true;
+}
+
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "folder-template-generator" is now active!');
 
@@ -68,14 +85,22 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Create new folder and change target path if createNewFolder is true
 		if (createNewFolder) {
-			do {
+			while (true) {
+				let newFolderPath = '';
 				const folderName = await vscode.window.showInputBox({ placeHolder: 'folderName', value: selectedStructureName });
 				if (!folderName) { return; }
-				targetPath = path.join(targetPath, folderName);
-				if (fs.existsSync(targetPath)) {
-					vscode.window.showErrorMessage(`Folder "${folderName}" already exists. Please choose another name.`);
+				if (!isValidFolderName(folderName)) {
+					vscode.window.showErrorMessage('Invalid folder name. Avoid special characters and reserved names');
+					continue;
 				}
-			} while (fs.existsSync(targetPath));
+				newFolderPath = path.join(targetPath, folderName);
+				if (fs.existsSync(newFolderPath)) {
+					vscode.window.showErrorMessage(`Folder "${folderName}" already exists. Please choose another name.`);
+					continue;
+				}
+				targetPath = newFolderPath;
+				break;
+			}
 			fs.mkdirSync(targetPath);
 		}
 
