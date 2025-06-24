@@ -1,6 +1,8 @@
-# folder-template-generator README
+---
 
-**folder-template-generator** is a Visual Studio Code extension that lets you quickly scaffold project folders and files from customizable templates, including variable substitution for project-specific values.
+# Folder Template Generator
+
+**Folder Template Generator** is a Visual Studio Code extension that lets you quickly scaffold project folders and files from customizable templates, including variable substitution for project-specific values and optional template parts.
 
 ---
 
@@ -9,26 +11,20 @@
 - **Generate entire folder/file structures** for new projects with a single command.
 - **Customizable templates:** Define your own file contents and folder layouts in your VS Code settings.
 - **Variable prompts:** When generating a structure, the extension prompts you for variables (like project name or language) and automatically replaces them in your templates.
+- **Optional files and template lines:** Use `[optionalKey]` markers in your templates and structures to conditionally include files or lines.
+- **Cross-platform validation:** Prevents creation of files or folders with invalid or reserved names.
 - **Supports both files and folders:** Easily specify which items are folders or files in your structure.
 - **Skips existing files/folders** to avoid overwriting your work.
 
-**Example workflow:**
-
-1. Right-click a folder in the VS Code Explorer and select **Generate Template**.
-2. Choose a structure (e.g., "Website").
-3. Enter values for any variables (e.g., projectName, projectLanguage).
-4. The extension creates the specified folders and files, filling in templates with your values.
-
-<!-- Example screenshot (add your own image if you like) -->
-<!--  -->
-
 ---
 
-## Requirements
+## How It Works
 
-- **Node.js** (required for VS Code extension development)
-- Works on all platforms supported by VS Code.
-- No additional dependencies for end users.
+1. **Right-click a folder** in the VS Code Explorer and select **Generate Template**, or use the command palette.
+2. **Choose a structure** (e.g., "Website").
+3. **Enter values** for any variables (e.g., `projectName`, `projectLanguage`).
+4. **Decide on optional features** (e.g., include CSS or JS).
+5. The extension creates the specified folders and files, filling in templates with your values and skipping invalid or existing items.
 
 ---
 
@@ -36,89 +32,121 @@
 
 This extension contributes the following settings:
 
-- **`folderTemplateGenerator.structures`**  
-  An array of structure definitions. Each structure specifies:
-  - `name`: The name of the structure (shown in the picker).
-  - `variables`: An array of variable names to prompt for.
-  - `structure`: An array of items, each with:
+### `folderTemplateGenerator.structures`
+
+An array of structure definitions. Each structure specifies:
+
+- `name`: The name of the structure (shown in the picker).
+- `variables`: An array of variable names to prompt for.
+- `structure`: An array of items, each with:
     - `fileName`: The file or folder path (relative to the workspace root).
     - `template`: The template to use (for files), or `"folder"` for folders.
+    - `optional`: *(optional)* A key that makes this item optional, shown as a prompt.
 
-- **`folderTemplateGenerator.templates`**  
-  An object mapping template names to arrays of strings (the file content, line by line).  
-  Variables in the form `[variableName]` will be replaced with user input.
 
-**Example `settings.json`:**
+### `folderTemplateGenerator.templates`
+
+An object mapping template names to arrays of strings (the file content, line by line).
+Variables in the form `[variableName]` will be replaced with user input.
+Lines with `[optionalKey]` will only be included if the user enables that option.
+
+---
+
+## Example `settings.json`
+
 ```json
 "folderTemplateGenerator.structures": [
-        {
-            "name": "Website",
-            "variables": [
-                "projectName",
-                "projectLanguage"
-            ],
-            "structure": [
-                {
-                    "fileName": "index.html",
-                    "template": "indexHtml"
-                },
-                {
-                    "fileName": "css/mainstyle.css",
-                    "template": "mainstyle"
-                },
-                {
-                    "fileName": "js/index.js"
-                },
-                {
-                    "fileName": "pages",
-                    "template": "folder"
-                },
-                {
-                    "fileName": "images",
-                    "template": "folder"
-                }
-            ]
-        }
+  {
+    "name": "Website",
+    "variables": [
+      "projectName",
+      "projectLanguage"
     ],
-    "folderTemplateGenerator.templates": {
-        "indexHtml": [
-            "<!DOCTYPE html>",
-            "<html lang=\"[projectLanguage]\">",
-            "",
-            "<head>",
-            "\t<meta charset=\"UTF-8\">",
-            "\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
-            "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"css/mainstyle.css\">",
-            "\t<title>[projectName]</title>",
-            "</head>",
-            "",
-            "<body>",
-            "\t<script src=\"js/index.js\"></script>",
-            "</body>",
-            "",
-            "</html>"
-        ],
-        "mainstyle": [
-            ":root {",
-            "    --backgroundColor: white;",
-            "    --mainColor: black;",
-            "}",
-            "",
-            "* {",
-            "\tmargin: 0px;",
-            "\tpadding: 0px;",
-            "\tbox-sizing: border-box;",
-            "\tcolor: var(--mainColor);",
-            "\tfont-family: 'Courier New', Courier, monospace;",
-            "}",
-            "",
-            "body {",
-            "\tmin-height: 100vh;",
-            "\tbackground-color: var(--backgroundColor);",
-            "}"
-        ]
-    }
+    "structure": [
+      {
+        "fileName": "index.html",
+        "template": "indexHtml"
+      },
+      {
+        "fileName": "css/mainstyle.css",
+        "template": "mainstyle",
+        "optional": "addCss"
+      },
+      {
+        "fileName": "js/index.js",
+        "optional": "addJs"
+      },
+      {
+        "fileName": "pages",
+        "template": "folder"
+      },
+      {
+        "fileName": "images",
+        "template": "folder"
+      }
+    ]
+  }
+],
+"folderTemplateGenerator.templates": {
+  "indexHtml": [
+    "<!DOCTYPE html>",
+    "<html lang=\"[projectLanguage]\">",
+    "",
+    "<head>",
+    "\t<meta charset=\"UTF-8\">",
+    "\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+    "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"css/mainstyle.css\">[addCss]",
+    "\t<title>[projectName]</title>",
+    "</head>",
+    "",
+    "<body>",
+    "\t<script src=\"js/index.js\"></script>[addJs]",
+    "",
+    "</body>",
+    "",
+    "</html>"
+  ],
+  "mainstyle": [
+    ":root {",
+    "    --backgroundColor: white;",
+    "    --mainColor: black;",
+    "}",
+    "",
+    "* {",
+    "\tmargin: 0px;",
+    "\tpadding: 0px;",
+    "\tbox-sizing: border-box;",
+    "\tcolor: var(--mainColor);",
+    "\tfont-family: 'Courier New', Courier, monospace;",
+    "}",
+    "",
+    "body {",
+    "\tmin-height: 100vh;",
+    "\tbackground-color: var(--backgroundColor);",
+    "}"
+  ]
+}
 ```
+
+
+---
+
+## Template Syntax
+
+- **Variables:**
+Use `[variableName]` in your template lines to have them replaced with user input.
+- **Optionals:**
+Use `[optionalKey]` at the end of a line in your template, or as `"optional": "key"` in your structure.
+The user will be prompted to include/exclude these items.
+
+---
+
+## Validation \& Safety
+
+- **Cross-platform:**
+The extension validates every part of file and folder names to avoid forbidden characters and reserved names (e.g., `CON`, `PRN`, `<`, `>`, `:`, `"`, `/`, `\`, `|`, `?`, `*`).
+- **No overwrites:**
+Existing files and folders are never overwritten—those items are skipped.
 
 ---
 
@@ -137,30 +165,25 @@ This extension contributes the following settings:
 - Initial release of **folder-template-generator**
 - Supports customizable structures and templates
 - Variable substitution in templates
+- Optional files and template lines
+- Cross-platform path validation
 - Skips existing files/folders
 
 ---
 
-## Following extension guidelines
+## Contributing \& Feedback
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+Found a bug or want a new feature?
+Open an issue or pull request at [GitHub Repo](https://github.com/Qualyyy/vscode-folder-template-generator).
 
 ---
 
-## Working with Markdown
+## Extension Guidelines
 
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+- [VS Code Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
 
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+---
 
-## For more information
+**Enjoy using Folder Template Generator!**
 
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy using folder-template-generator!**
-
+---
