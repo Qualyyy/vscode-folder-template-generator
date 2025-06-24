@@ -31,6 +31,13 @@
         }
       ]
     },
+    "viewsWelcome": [
+      {
+        "view": "explorer",
+        "contents": "\n[📂 Create Folder from template](command:folder-template-generator.generateTemplate)",
+        "when": "workbenchState == empty"
+      }
+    ],
     "configuration": [
       {
         "title": "Folder Template Generator",
