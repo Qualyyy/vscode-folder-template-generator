@@ -9,7 +9,37 @@ import * as path from 'path';
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "folder-template-generator" is now active!');
 
-	let disposable = vscode.commands.registerCommand('folder-template-generator.generateTemplate', async () => {
+	let disposable = vscode.commands.registerCommand('folder-template-generator.generateTemplate', async (Uri?: vscode.Uri) => {
+
+		// Get the target path
+
+		let targetPath = '';
+		// User right clicks a folder
+		if (Uri && Uri.fsPath) {
+			targetPath = Uri.fsPath;
+		}
+		// User uses command in folder
+		else if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
+			targetPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
+		}
+		// User uses command in empty workspace
+		else {
+			const options: vscode.OpenDialogOptions = {
+				canSelectMany: false,
+				openLabel: 'Select parent folder',
+				canSelectFiles: false,
+				canSelectFolders: true
+			};
+			const parentFolderUri = await vscode.window.showOpenDialog(options);
+			if (parentFolderUri && parentFolderUri[0]) {
+				targetPath = parentFolderUri[0].fsPath;
+			}
+			else {
+				vscode.window.showErrorMessage('No folder selected');
+				return;
+			}
+		}
+
 		const config = vscode.workspace.getConfiguration('folderTemplateGenerator');
 		const structures = config.get<any[]>('structures') || [];
 		const fileTemplates = config.get<Record<string, string[]>>('templates') || {};
@@ -19,15 +49,6 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.window.showErrorMessage('Please create a structure first.');
 			return;
 		}
-
-		// Exit if no opened folder
-		if (!vscode.workspace.workspaceFolders) {
-			vscode.window.showErrorMessage('No folder open');
-			return;
-		}
-
-		// Get the current workspace folder
-		const workspacePath = vscode.workspace.workspaceFolders[0].uri.fsPath;
 
 		const structureNames = structures.map(structure => structure.name);
 
@@ -65,7 +86,7 @@ export function activate(context: vscode.ExtensionContext) {
 		for (const item of selectedStructure.structure) {
 			const fileName = item.fileName;
 			const fileTemplate = item.template;
-			const filePath = path.join(workspacePath, fileName);
+			const filePath = path.join(targetPath, fileName);
 
 			// Skip item if optional true
 			if (item.optional) {
