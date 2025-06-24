@@ -4,10 +4,10 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 
-function isValidFolderName(name: string): boolean {
+function isValidName(name: string): boolean {
 	// Forbidden characters on Windows: \ / : * ? " < > |
 	// Forbidden on macOS/Linux: /
-	// Also disallow empty string, trailing spaces or dots (Windows), and reserved names (Windows)
+	// Disallow empty string, trailing spaces or dots (Windows), and reserved names (Windows)
 	const forbidden = /[\\\/:\*\?"<>\|]/;
 	const reservedNames = [
 		'CON', 'PRN', 'AUX', 'NUL',
@@ -89,7 +89,7 @@ export function activate(context: vscode.ExtensionContext) {
 				let newFolderPath = '';
 				const folderName = await vscode.window.showInputBox({ placeHolder: 'folderName', value: selectedStructureName });
 				if (!folderName) { return; }
-				if (!isValidFolderName(folderName)) {
+				if (!isValidName(folderName)) {
 					vscode.window.showErrorMessage('Invalid folder name. Avoid special characters and reserved names');
 					continue;
 				}
@@ -133,6 +133,22 @@ export function activate(context: vscode.ExtensionContext) {
 			const fileTemplate = item.template;
 			const filePath = path.join(targetPath, fileName);
 
+			// Check for invalid parts in fileName
+			const fileNameParts = fileName.split(/[\\/]/);
+			let invalidPart;
+			for (const part of fileNameParts) {
+				if (!isValidName(part)) {
+					invalidPart = part;
+					break;
+				}
+			}
+
+			// Skip item if the name is invalid
+			if (invalidPart) {
+				vscode.window.showErrorMessage(`Skipping ${fileName}, fileName is invalid. Avoid special characters and reserved names. Please update your template`);
+				continue;
+			}
+
 			// Skip item if optional true
 			if (item.optional) {
 				if (!optionals[item.optional]) {
@@ -149,6 +165,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			// Item is a folder
 			if (fileTemplate === 'folder') {
+
 				fs.mkdirSync(filePath, { recursive: true });
 				continue;
 			}
