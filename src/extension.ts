@@ -33,12 +33,14 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Prompt user to select a structure
 		const selectedStructureName = await vscode.window.showQuickPick(structureNames, { placeHolder: 'Select a structure' });
+		if (!selectedStructureName) { return; }
 		const selectedStructure = structures.find(s => s.name === selectedStructureName);
 
 		// Check variables
 		const variables: { [key: string]: string } = {};
 		for (const variable of selectedStructure.variables) {
-			const value = await vscode.window.showInputBox({ prompt: variable }) || '';
+			const value = await vscode.window.showInputBox({ prompt: variable });
+			if (!value) { return; }
 			variables[variable] = value;
 		}
 
