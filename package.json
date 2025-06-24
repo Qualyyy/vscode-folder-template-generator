@@ -34,7 +34,7 @@
     "viewsWelcome": [
       {
         "view": "explorer",
-        "contents": "\n[📂 Create Folder from template](command:folder-template-generator.generateTemplate)",
+        "contents": "\n[📂 Create folder from template](command:folder-template-generator.generateTemplate)",
         "when": "workbenchState == empty"
       }
     ],
