@@ -210,6 +210,7 @@ export function activate(context: vscode.ExtensionContext) {
 			// Create the file
 			fs.mkdirSync(path.dirname(filePath), { recursive: true });
 			fs.writeFileSync(filePath, fileContent);
+			vscode.window.showInformationMessage(`Succesfully created ${fileName}`);
 		};
 
 		if (createNewFolder) {
