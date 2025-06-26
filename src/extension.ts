@@ -127,6 +127,8 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		}
 
+		const createdItems: string[] = [];
+
 		// Create a new file/folder for every item in the structure
 		for (const item of selectedStructure.structure) {
 			const fileName = item.fileName;
@@ -135,6 +137,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			// Check for invalid parts in fileName
 			const fileNameParts = fileName.split(/[\\/]/);
+			console.log(fileNameParts);
 			let invalidPart;
 			for (const part of fileNameParts) {
 				if (!isValidName(part)) {
@@ -163,9 +166,20 @@ export function activate(context: vscode.ExtensionContext) {
 				continue;
 			}
 
+			// Add the item
+
+			// Add folders and files to arrays
+			for (const i in fileNameParts) {
+				// const itemPath = fileNameParts.slice(0, i + 1).reduce((acc: string, curr: string) => acc + curr, '');
+				const itemPath = path.join(targetPath, ...fileNameParts.slice(0, Number(i) + 1));
+				console.log(itemPath);
+				if (!fs.existsSync(itemPath) && !createdItems.includes(itemPath)) {
+					createdItems.push(itemPath);
+				}
+			}
+
 			// Item is a folder
 			if (fileTemplate === 'folder') {
-
 				fs.mkdirSync(filePath, { recursive: true });
 				continue;
 			}
@@ -210,8 +224,24 @@ export function activate(context: vscode.ExtensionContext) {
 			// Create the file
 			fs.mkdirSync(path.dirname(filePath), { recursive: true });
 			fs.writeFileSync(filePath, fileContent);
-			vscode.window.showInformationMessage(`Succesfully created ${fileName}`);
 		};
+
+		console.log(createdItems);
+
+		// Delete all created files and folders if user wants to
+		const revertCreation = await vscode.window.showInformationMessage(`Succesfully created ${createdItems.length} items.\nDo you want to revert?`, 'Revert', 'Keep') === 'Revert';
+
+		if (revertCreation) {
+			for (const itemPath of createdItems) {
+				try {
+					fs.rmSync(itemPath, { recursive: true });
+				}
+				catch {
+					console.error('Failed to remove', itemPath);
+				}
+			}
+			return;
+		}
 
 		if (createNewFolder) {
 			const openNewFolder = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `Open new folder?` }) === 'Yes';
@@ -219,7 +249,6 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(targetPath), true);
 			}
 		}
-
 	});
 
 	context.subscriptions.push(disposable);
