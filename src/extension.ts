@@ -113,7 +113,7 @@ export function activate(context: vscode.ExtensionContext) {
 			for (const variable of structureVariables) {
 				const value = await vscode.window.showInputBox({ prompt: variable.varName, value: variable.default });
 				if (!value) { return; }
-				variables[variable] = value;
+				variables[variable.varName] = value;
 			}
 		}
 
@@ -129,7 +129,7 @@ export function activate(context: vscode.ExtensionContext) {
 				optionals[optional] = false; // Don't add these items
 			}
 		}
-
+		console.log(variables);
 		console.log(optionals);
 
 		// Create a new file/folder for every item in the structure
@@ -140,7 +140,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 			// Check for invalid parts in fileName
 			const fileNameParts = fileName.split(/[\\/]/);
-			console.log(fileNameParts);
 			let invalidPart;
 			for (const part of fileNameParts) {
 				if (!isValidName(part)) {
@@ -175,7 +174,6 @@ export function activate(context: vscode.ExtensionContext) {
 			for (const i in fileNameParts) {
 				// const itemPath = fileNameParts.slice(0, i + 1).reduce((acc: string, curr: string) => acc + curr, '');
 				const itemPath = path.join(targetPath, ...fileNameParts.slice(0, Number(i) + 1));
-				console.log(itemPath);
 				if (!fs.existsSync(itemPath) && !createdItems.includes(itemPath)) {
 					createdItems.push(itemPath);
 				}
@@ -237,8 +235,6 @@ export function activate(context: vscode.ExtensionContext) {
 			fs.mkdirSync(path.dirname(filePath), { recursive: true });
 			fs.writeFileSync(filePath, fileContent);
 		};
-
-		console.log(createdItems);
 
 		// Delete all created files and folders if user wants to
 		const revertCreation = await vscode.window.showInformationMessage(`Succesfully created ${createdItems.length} items.\nDo you want to revert?`, 'Revert', 'Keep') === 'Revert';
