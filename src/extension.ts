@@ -83,6 +83,8 @@ export function activate(context: vscode.ExtensionContext) {
 			createNewFolder = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: 'Create a new folder?' }) === 'Yes';
 		}
 
+		const createdItems: string[] = [];
+
 		// Create new folder and change target path if createNewFolder is true
 		if (createNewFolder) {
 			while (true) {
@@ -98,6 +100,7 @@ export function activate(context: vscode.ExtensionContext) {
 					vscode.window.showErrorMessage(`Folder "${folderName}" already exists. Please choose another name.`);
 					continue;
 				}
+				createdItems.push(newFolderPath);
 				targetPath = newFolderPath;
 				break;
 			}
@@ -126,8 +129,6 @@ export function activate(context: vscode.ExtensionContext) {
 				optionals[item.optional] = false; // Don't add these items
 			}
 		}
-
-		const createdItems: string[] = [];
 
 		// Create a new file/folder for every item in the structure
 		for (const item of selectedStructure.structure) {
