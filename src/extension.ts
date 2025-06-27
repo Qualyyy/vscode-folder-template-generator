@@ -197,20 +197,29 @@ export function activate(context: vscode.ExtensionContext) {
 				let filteredParts: string[] = [];
 
 				for (let part of contentParts) {
-					const match = part.match(/\[([a-zA-Z0-9_]+)\]/);
-					if (match) {
-						const marker = match[1];
-						if (marker in optionals) {
-							// Skip if false
-							if (!optionals[marker]) {
+					const matches = [...part.matchAll(/\[([a-zA-Z0-9_]+)\]/g)];
+					let skipPart = false;
+
+					if (matches) {
+						for (const match of matches) {
+							const marker = match[1];
+							if (variables[marker]) {
 								continue;
 							}
-							// Remove marker if true
-							part = part.replace(match[0], '');
+							if (marker in optionals) {
+								// Skip if false
+								if (!optionals[marker]) {
+									skipPart = true;
+									continue;
+								}
+								// Remove marker if true
+								part = part.replace(match[0], '');
+							}
 						}
 					}
-
-					filteredParts.push(part);
+					if (!skipPart) {
+						filteredParts.push(part);
+					}
 				}
 
 				fileContent = filteredParts.join('\n');
