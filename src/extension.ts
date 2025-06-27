@@ -121,8 +121,9 @@ export function activate(context: vscode.ExtensionContext) {
 		const optionals: { [key: string]: boolean } = {};
 		for (const optional of selectedStructure.optionals) {
 			if (optional && !(optional in optionals)) {
-				const addItem = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `${optional}?` }) === 'Yes';
-				if (addItem) {
+				const addItem = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `${optional}?` });
+				if (addItem === undefined) { return; }
+				if (addItem === 'Yes') {
 					optionals[optional] = true; // Add these items
 					continue;
 				}
