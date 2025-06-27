@@ -119,16 +119,18 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Check optional values
 		const optionals: { [key: string]: boolean } = {};
-		for (const item of selectedStructure.structure) {
-			if (item.optional && !(item.optional in optionals)) {
-				const addItem = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `${item.optional}?` }) === 'Yes';
+		for (const optional of selectedStructure.optionals) {
+			if (optional && !(optional in optionals)) {
+				const addItem = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `${optional}?` }) === 'Yes';
 				if (addItem) {
-					optionals[item.optional] = true; // Add these items
+					optionals[optional] = true; // Add these items
 					continue;
 				}
-				optionals[item.optional] = false; // Don't add these items
+				optionals[optional] = false; // Don't add these items
 			}
 		}
+
+		console.log(optionals);
 
 		// Create a new file/folder for every item in the structure
 		for (const item of selectedStructure.structure) {
