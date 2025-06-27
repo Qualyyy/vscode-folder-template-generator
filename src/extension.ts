@@ -27,6 +27,15 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "folder-template-generator" is now active!');
 
 	let disposable = vscode.commands.registerCommand('folder-template-generator.generateTemplate', async (Uri?: vscode.Uri) => {
+		const config = vscode.workspace.getConfiguration('folderTemplateGenerator');
+		const structures = config.get<any[]>('structures') || [];
+		const fileTemplates = config.get<Record<string, string[]>>('templates') || {};
+
+		// Exit if user hasn't created any structures
+		if (structures.length === 0) {
+			vscode.window.showErrorMessage('Please create a structure first.');
+			return;
+		}
 
 		// Get the target path
 
@@ -57,16 +66,6 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.window.showErrorMessage('No folder selected');
 				return;
 			}
-		}
-
-		const config = vscode.workspace.getConfiguration('folderTemplateGenerator');
-		const structures = config.get<any[]>('structures') || [];
-		const fileTemplates = config.get<Record<string, string[]>>('templates') || {};
-
-		// Exit if user hasn't created any structures
-		if (structures.length === 0) {
-			vscode.window.showErrorMessage('Please create a structure first.');
-			return;
 		}
 
 		const structureNames = structures.map(structure => structure.name);
