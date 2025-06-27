@@ -73,6 +73,12 @@
                     "additionalProperties": false
                   }
                 },
+                "optionals": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "structure": {
                   "type": "array",
                   "items": {
