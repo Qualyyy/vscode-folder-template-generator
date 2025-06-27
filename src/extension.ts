@@ -209,7 +209,7 @@ export function activate(context: vscode.ExtensionContext) {
 								// Skip if false
 								if (!optionals[marker]) {
 									skipPart = true;
-									continue;
+									break;
 								}
 								// Remove marker if true
 								part = part.replace(match[0], '');
