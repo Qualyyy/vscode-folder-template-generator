@@ -232,12 +232,15 @@ export function activate(context: vscode.ExtensionContext) {
 		const revertCreation = await vscode.window.showInformationMessage(`Succesfully created ${createdItems.length} items.\nDo you want to revert?`, 'Revert', 'Keep') === 'Revert';
 
 		if (revertCreation) {
-			for (const itemPath of createdItems) {
+			for (const itemPath of createdItems.slice().reverse()) {
 				try {
 					fs.rmSync(itemPath, { recursive: true });
 				}
 				catch {
-					console.error('Failed to remove', itemPath);
+					console.error(`Failed to remove ${itemPath}`);
+					if (!fs.existsSync(itemPath)) {
+						vscode.window.showErrorMessage(`Failed to remove ${itemPath}`);
+					}
 				}
 			}
 			return;
