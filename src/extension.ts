@@ -87,6 +87,16 @@ export function activate(context: vscode.ExtensionContext) {
 			uniqueVariables.add(variable.varName);
 		}
 
+		// Exit if duplicate file
+		const uniqueFiles = new Set<string>();
+		for (const file of selectedStructure.structure) {
+			if (uniqueFiles.has(file.fileName)) {
+				vscode.window.showErrorMessage(`Duplicate file '${file.fileName}'. Please update your structure`);
+				return;
+			}
+			uniqueFiles.add(file.fileName);
+		}
+
 		// Ask user if they want to create a new folder
 		if (!createNewFolder) {
 			createNewFolder = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: 'Create a new folder?' }) === 'Yes';
