@@ -77,6 +77,16 @@ export function activate(context: vscode.ExtensionContext) {
 
 		const structureVariables = selectedStructure.variables;
 
+		// Exit if duplicate variable
+		const uniqueVariables = new Set<string>();
+		for (const variable of structureVariables) {
+			if (uniqueVariables.has(variable.varName)) {
+				vscode.window.showErrorMessage(`Duplicate variable '${variable.varName}'. Please update your structure`);
+				return;
+			}
+			uniqueVariables.add(variable.varName);
+		}
+
 		// Ask user if they want to create a new folder
 		if (!createNewFolder) {
 			createNewFolder = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: 'Create a new folder?' }) === 'Yes';
