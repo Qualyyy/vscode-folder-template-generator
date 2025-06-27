@@ -247,6 +247,11 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 
+		if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
+			vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(targetPath), false);
+			return;
+		}
+
 		if (createNewFolder) {
 			const openNewFolder = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `Open new folder?` }) === 'Yes';
 			if (openNewFolder) {
