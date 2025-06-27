@@ -55,7 +55,23 @@
                   "type": "string"
                 },
                 "variables": {
-                  "type": "array"
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "varName",
+                      "default"
+                    ],
+                    "properties": {
+                      "varName": {
+                        "type": "string"
+                      },
+                      "default": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
                 },
                 "structure": {
                   "type": "array",

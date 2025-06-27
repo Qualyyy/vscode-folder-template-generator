@@ -111,7 +111,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const variables: { [key: string]: string } = {};
 		if (structureVariables) {
 			for (const variable of structureVariables) {
-				const value = await vscode.window.showInputBox({ prompt: variable });
+				const value = await vscode.window.showInputBox({ prompt: variable.varName, value: variable.default });
 				if (!value) { return; }
 				variables[variable] = value;
 			}
