@@ -108,7 +108,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (createNewFolder) {
 			while (true) {
 				let newFolderPath = '';
-				const folderName = await vscode.window.showInputBox({ placeHolder: 'folderName', value: selectedStructureName });
+				const folderName = await vscode.window.showInputBox({ title: 'folderName', value: selectedStructureName });
 				if (!folderName) { return; }
 				if (!isValidName(folderName)) {
 					vscode.window.showErrorMessage('Invalid folder name. Avoid special characters and reserved names');
