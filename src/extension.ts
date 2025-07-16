@@ -3,6 +3,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import { getTargetPath } from './utils/pathUtils';
 
 function isValidName(name: string): boolean {
 	// Forbidden characters on Windows: \ / : * ? " < > |
@@ -39,34 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Get the target path
 
-		let targetPath = '';
-		let createNewFolder = false;
-		// User right clicks a folder
-		if (Uri && Uri.fsPath) {
-			targetPath = Uri.fsPath;
-		}
-		// User uses command in folder
-		else if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
-			targetPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
-		}
-		// User uses command in empty workspace
-		else {
-			const options: vscode.OpenDialogOptions = {
-				canSelectMany: false,
-				openLabel: 'Select parent folder',
-				canSelectFiles: false,
-				canSelectFolders: true
-			};
-			const parentFolderUri = await vscode.window.showOpenDialog(options);
-			if (parentFolderUri && parentFolderUri[0]) {
-				targetPath = parentFolderUri[0].fsPath;
-				createNewFolder = true;
-			}
-			else {
-				vscode.window.showErrorMessage('No folder selected');
-				return;
-			}
-		}
+		let { targetPath, createNewFolder } = await getTargetPath(Uri);
 
 		const structureNames = structures.map(structure => structure.name);
 
