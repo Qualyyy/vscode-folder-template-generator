@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Exit if user hasn't created any structures
 		if (structures.length === 0) {
-			vscode.window.showErrorMessage('Please create a structure first.');
+			vscode.window.showErrorMessage('You haven\'t created any structures.\nPlease create a structure in your getPackedSettings.json', { modal: true });
 			return;
 		}
 
@@ -37,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const uniqueVariables = new Set<string>();
 		for (const variable of structureVariables) {
 			if (uniqueVariables.has(variable.varName)) {
-				vscode.window.showErrorMessage(`Duplicate variable '${variable.varName}'. Please update your structure`);
+				vscode.window.showErrorMessage(`Duplicate variable '${variable.varName}'. Please update your structure`, { modal: true });
 				return;
 			}
 			uniqueVariables.add(variable.varName);
@@ -47,7 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const uniqueFiles = new Set<string>();
 		for (const file of selectedStructure.structure) {
 			if (uniqueFiles.has(file.fileName)) {
-				vscode.window.showErrorMessage(`Duplicate file '${file.fileName}'. Please update your structure`);
+				vscode.window.showErrorMessage(`Duplicate file '${file.fileName}'. Please update your structure`, { modal: true });
 				return;
 			}
 			uniqueFiles.add(file.fileName);
@@ -67,12 +67,12 @@ export function activate(context: vscode.ExtensionContext) {
 				const folderName = await vscode.window.showInputBox({ title: 'folderName', value: selectedStructureName });
 				if (!folderName) { return; }
 				if (!isValidName(folderName)) {
-					vscode.window.showErrorMessage('Invalid folder name. Avoid special characters and reserved names');
+					vscode.window.showErrorMessage('Invalid folder name. Avoid special characters and reserved names', { modal: true });
 					continue;
 				}
 				newFolderPath = path.join(targetPath, folderName);
 				if (fs.existsSync(newFolderPath)) {
-					vscode.window.showErrorMessage(`Folder "${folderName}" already exists. Please choose another name.`);
+					vscode.window.showErrorMessage(`Folder "${folderName}" already exists. Please choose another name.`, { modal: true });
 					continue;
 				}
 				createdItems.push(newFolderPath);
@@ -213,7 +213,7 @@ export function activate(context: vscode.ExtensionContext) {
 		};
 
 		// Delete all created files and folders if user wants to
-		const revertCreation = await vscode.window.showInformationMessage(`Succesfully created ${createdItems.length} items.\nDo you want to revert?`, 'Revert', 'Keep') === 'Revert';
+		const revertCreation = await vscode.window.showInformationMessage(`Are you sure you want to create ${createdItems.length} items?`, { modal: true }, 'Yes') !== 'Yes';
 
 		if (revertCreation) {
 			for (const itemPath of createdItems.slice().reverse()) {
