@@ -105,15 +105,8 @@
             },
             "default": []
           },
-          "folderTemplateGenerator.templates": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "default": {}
+          "folderTemplateGenerator.templatesDirectory": {
+            "type": "string"
           }
         }
       }
