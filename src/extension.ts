@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Exit if user hasn't created any structures
 		if (structures.length === 0) {
-			vscode.window.showErrorMessage('You haven\'t created any structures.\nPlease create a structure in your getPackedSettings.json', { modal: true });
+			vscode.window.showErrorMessage('You haven\'t created any structures.\nPlease create a structure in your settings.json', { modal: true });
 			return;
 		}
 
