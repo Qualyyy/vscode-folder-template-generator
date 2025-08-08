@@ -46,11 +46,9 @@ An array of structure definitions. Each structure specifies:
     - `optional`: *(optional)* A key that makes this item optional, shown as a prompt.
 
 
-### `folderTemplateGenerator.templates`
+### `folderTemplateGenerator.templatesDirectory`
 
-An object mapping template names to arrays of strings (the file content, line by line).
-Variables in the form `[variableName]` will be replaced with user input.
-Lines with `[optionalKey]` will only be included if the user enables that option.
+A string path to the directory containing your template files. Template files should contain the content you want to generate for each file type with the variable and optional names between square brackets.
 
 
 ## Example `settings.json`
@@ -60,8 +58,12 @@ Lines with `[optionalKey]` will only be included if the user enables that option
   {
     "name": "Website",
     "variables": [
-      { "varName": "projectName", "default": "My Website" },
-      { "varName": "projectLanguage", "default": "en" }
+      { "varName": "projectName",
+        "default": "My Website"
+      },
+      { "varName": "projectLanguage",
+        "default": "en"
+      }
     ],
     "optionals": [
       "addCss",
@@ -92,45 +94,27 @@ Lines with `[optionalKey]` will only be included if the user enables that option
     ]
   }
 ],
-"folderTemplateGenerator.templates": {
-  "indexHtml": [
-    "<!DOCTYPE html>",
-    "<html lang=\"[projectLanguage]\">",
-    "",
-    "<head>",
-    "\t<meta charset=\"UTF-8\">",
-    "\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
-    "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"css/mainstyle.css\">[addCss]",
-    "\t<title>[projectName]</title>",
-    "</head>",
-    "",
-    "<body>",
-    "\t<script src=\"js/index.js\"></script>[addJs]",
-    "",
-    "</body>",
-    "",
-    "</html>"
-  ],
-  "mainstyleCss": [
-    ":root {",
-    "    --backgroundColor: white;",
-    "    --mainColor: black;",
-    "}",
-    "",
-    "* {",
-    "\tmargin: 0px;",
-    "\tpadding: 0px;",
-    "\tbox-sizing: border-box;",
-    "\tcolor: var(--mainColor);",
-    "\tfont-family: 'Courier New', Courier, monospace;",
-    "}",
-    "",
-    "body {",
-    "\tmin-height: 100vh;",
-    "\tbackground-color: var(--backgroundColor);",
-    "}"
-  ]
-}
+"folderTemplateGenerator.templatesDirectory": "C:/.Personal/file-templates"
+```
+
+## Example `settings.json`
+```html
+<!DOCTYPE html>
+<html lang="[projectLanguage]">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/mainstyle.css">
+    <script defer src="js/index.js"></script>[addJs]"
+    <title>[projectName]</title>"
+</head>
+
+<body>
+  <h1>[projectName]</h1>
+</body>
+
+</html>
 ```
 
 ## Template Syntax
