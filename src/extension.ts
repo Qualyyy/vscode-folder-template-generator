@@ -80,7 +80,6 @@ export function activate(context: vscode.ExtensionContext) {
 				targetPath = newFolderPath;
 				break;
 			}
-			fs.mkdirSync(targetPath);
 		}
 
 		// Check variables
@@ -108,6 +107,8 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		console.log(variables);
 		console.log(optionals);
+
+		fs.mkdirSync(targetPath);
 
 		// Create a new file/folder for every item in the structure
 		for (const item of selectedStructure.structure) {
