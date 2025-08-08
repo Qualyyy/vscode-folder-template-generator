@@ -5,6 +5,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { getTargetPath } from './utils/pathUtils';
 import { isValidName } from './utils/validation';
+import { createFileContent } from './utils/createFileContent';
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Congratulations, your extension "folder-template-generator" is now active!');
@@ -166,50 +167,7 @@ export function activate(context: vscode.ExtensionContext) {
 			let fileContent = '';
 
 			if (fileTemplate) {
-				const templateFilePath = path.join(templatesDirectory, fileTemplate);
-				const templateContent = fs.readFileSync(templateFilePath, 'utf8');
-
-				const contentParts = templateContent.replace(/\r\n/g, '\n').split('\n');
-
-				if (contentParts) {
-					let filteredParts: string[] = [];
-
-					for (let part of contentParts) {
-						const matches = [...part.matchAll(/\[([a-zA-Z0-9_]+)\]/g)];
-						let skipPart = false;
-
-						if (matches) {
-							for (const match of matches) {
-								const marker = match[1];
-								if (variables[marker]) {
-									continue;
-								}
-								if (marker in optionals) {
-									// Skip if false
-									if (!optionals[marker]) {
-										skipPart = true;
-										break;
-									}
-									// Remove marker if true
-									part = part.replace(match[0], '');
-								}
-							}
-						}
-						if (!skipPart) {
-							filteredParts.push(part);
-						}
-					}
-
-					fileContent = filteredParts.join('\n');
-
-					// Replace variables with correct value
-					if (variables) {
-						for (const key in variables) {
-							const searchKey = '[' + key + ']';
-							fileContent = fileContent.replaceAll(searchKey, variables[key]);
-						}
-					}
-				}
+				fileContent = createFileContent(fileTemplate, templatesDirectory, variables, optionals);
 			}
 
 			// Create the file
