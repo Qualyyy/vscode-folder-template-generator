@@ -114,10 +114,31 @@
               },
               "additionalProperties": false
             },
-            "default": []
+            "default": [
+              {
+                "name": "example template (edit in settings)",
+                "variables": [
+                  {
+                    "varName": "variable",
+                    "default": "default value"
+                  }
+                ],
+                "optionals": [
+                  "addIndexHtml"
+                ],
+                "structure": [
+                  {
+                    "fileName": "index.html",
+                    "template": "index.html",
+                    "optional": "addIndexHtml"
+                  }
+                ]
+              }
+            ]
           },
           "folderTemplateGenerator.templatesDirectory": {
-            "type": "string"
+            "type": "string",
+            "default": ""
           }
         }
       }
