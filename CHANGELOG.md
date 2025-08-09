@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Provides a ready-to-use template configuration to help new users get started.
 - Default empty template directory.
 
+### Fixed
+- Command now works when deciding not to create a new folder.
+
 ## [1.1.0] – 2025-08-09
 ### Added
 - Validation for `folderTemplateGenerator.templatesDirectory`:
