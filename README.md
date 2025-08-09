@@ -140,17 +140,9 @@ After creation, you can instantly revert all created files and folders.
 - Does not support advanced template logic (like loops or conditionals).
 - If a variable is missing from the template, it will be left as `[variableName]` in the output.
 
-## Release Notes
+## Changelog
 
-### 0.0.1
-
-- Initial release of **folder-template-generator**
-- Supports customizable structures and templates
-- Variable substitution in templates (with defaults)
-- Optional files and template lines
-- Cross-platform path validation
-- Skips existing files/folders
-- One-click revert for all generated items
+See the [full changelog on GitHub](https://github.com/Qualyyy/vscode-folder-template-generator/blob/master/CHANGELOG.md).
 
 ## Contributing \& Feedback
 
