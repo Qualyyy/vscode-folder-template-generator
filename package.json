@@ -1,8 +1,19 @@
 {
   "name": "folder-template-generator",
   "displayName": "Folder Template Generator",
-  "description": "",
-  "version": "0.0.1",
+  "description": "Generate folder structures based on user-made templates",
+  "publisher": "Qualyyy",
+  "keywords": [
+    "template",
+    "scaffold",
+    "generator",
+    "folder",
+    "structure",
+    "boilerplate"
+  ],
+  "license": "MIT",
+  "icon": "images/icon.png",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/Qualyyy/vscode-folder-template-generator.git"
