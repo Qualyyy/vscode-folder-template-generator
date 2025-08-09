@@ -21,6 +21,16 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 
+		if (!fs.existsSync(templatesDirectory)) {
+			if (templatesDirectory.trim() === '') {
+				vscode.window.showErrorMessage('No template directory configured.\nPlease set "folderTemplateGenerator.templatesDirectory" in your settings.', { modal: true });
+			}
+			else {
+				vscode.window.showErrorMessage(`The configured templates directory was not found: "${templatesDirectory}".\nPlease update "folderTemplateGenerator.templatesDirectory" in your settings.`, { modal: true });
+			}
+			return;
+		}
+
 		// Get the target path
 
 		let { targetPath, createNewFolder } = await getTargetPath(Uri);
