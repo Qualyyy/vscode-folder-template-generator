@@ -1,9 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-export function createFileContent(fileTemplate: string, templatesDirectory: string, variables: { [key: string]: string }, optionals: { [key: string]: boolean }): string {
-    const templateFilePath = path.join(templatesDirectory, fileTemplate);
-    const templateContent = fs.readFileSync(templateFilePath, 'utf8');
+export function createFileContent(fileTemplatePath: string, variables: { [key: string]: string }, optionals: { [key: string]: boolean }): string {
+    const templateContent = fs.readFileSync(fileTemplatePath, 'utf8');
 
     const contentParts = templateContent.replace(/\r\n/g, '\n').split('\n');
 

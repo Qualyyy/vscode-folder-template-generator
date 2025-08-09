@@ -178,7 +178,14 @@ export function activate(context: vscode.ExtensionContext) {
 			let fileContent = '';
 
 			if (fileTemplate) {
-				fileContent = createFileContent(fileTemplate, templatesDirectory, variables, optionals);
+				const fileTemplatePath = path.join(templatesDirectory, fileTemplate);
+				if (!fs.existsSync(fileTemplatePath)) {
+					vscode.window.showErrorMessage(`Could not find template "${fileTemplatePath}".\nPlease verify that the file exists and update your settings.json if needed.`, { modal: true });
+					vscode.window.showInformationMessage(`Empty file "${fileName}" created (template not found)`);
+				}
+				else {
+					fileContent = createFileContent(fileTemplatePath, variables, optionals);
+				}
 			}
 
 			// Create the file

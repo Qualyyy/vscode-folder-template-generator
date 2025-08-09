@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- 
+- Validation for file templates:
+  - Shows a modal error if the file template is not found.
+  - Shows an information message saying an empty file got created.
 
 ## [1.1.0] – 2025-08-09
 ### Added
