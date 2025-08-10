@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
-- 
+
+## [1.2.1] – 2025-08-10
+### Added
+- README badges for the following extension metrics:
+  - Version, installs, rating, license and last-updated.
+
+### Fixed
+- Updated README to show more correct information and better examples.
 
 ## [1.2.0] – 2025-08-09
 ### Added
