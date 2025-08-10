@@ -9,8 +9,8 @@
 ## Features
 
 - **Generate entire folder/file structures** for new projects with a single command.
-- **Customizable templates:** Define your own file contents and folder layouts in your VS Code settings.
-- **Variable prompts with defaults:** When generating a structure, the extension prompts you for variables (like project name or language) and automatically replaces them in your templates. Each variable can have a default value.
+- **Customizable templates:** Define your own folder structures in your VS Code settings and create local file templates.
+- **Variable prompts with defaults:** When generating a structure, the extension prompts you for variables (like project name or language) and automatically replaces them in your templates. Each variable can have a default value. These can be set in the folder structures.
 - **Optional files and template lines:** Use `[optionalKey]` markers in your templates and structures to conditionally include files or lines.
 - **Cross-platform validation:** Prevents creation of files or folders with invalid or reserved names.
 - **Supports both files and folders:** Easily specify which items are folders or files in your structure.
@@ -20,7 +20,7 @@
 
 ## How It Works
 
-1. **Right-click a folder** in the VS Code Explorer and select **Generate Template**, or use the command palette.
+1. **Right-click a folder** in the VS Code Explorer and select **Generate Template**, or use the command palette. Using the command in an empty workspace prompts you to choose a local parent folder.
 2. **Choose a structure** (e.g., "Website").
 3. **Enter values** for any variables (with defaults provided).
 4. **Decide on optional features** (e.g., include CSS or JS).
@@ -72,11 +72,11 @@ A string path to the directory containing your template files. Template files sh
     "structure": [
       {
         "fileName": "index.html",
-        "template": "indexHtml"
+        "template": "indexHtml.html"
       },
       {
         "fileName": "css/mainstyle.css",
-        "template": "mainstyleCss",
+        "template": "mainstyleCss.css",
         "optional": "addCss"
       },
       {
@@ -97,7 +97,7 @@ A string path to the directory containing your template files. Template files sh
 "folderTemplateGenerator.templatesDirectory": "C:/.Personal/file-templates"
 ```
 
-## Example `settings.json`
+## Example `indexHtml.html` template
 ```html
 <!DOCTYPE html>
 <html lang="[projectLanguage]">
@@ -105,9 +105,9 @@ A string path to the directory containing your template files. Template files sh
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/mainstyle.css">
-    <script defer src="js/index.js"></script>[addJs]"
-    <title>[projectName]</title>"
+    <link rel="stylesheet" type="text/css" href="css/mainstyle.css">[addCss]
+    <script defer src="js/index.js"></script>[addJs]
+    <title>[projectName]</title>
 </head>
 
 <body>
@@ -147,7 +147,8 @@ See the [full changelog on GitHub](https://github.com/Qualyyy/vscode-folder-temp
 ## Contributing \& Feedback
 
 Found a bug or want a new feature?
-Open an issue or pull request at [GitHub Repo](https://github.com/Qualyyy/vscode-folder-template-generator)[^1].
+- Open an issue or pull request at [GitHub Repo](https://github.com/Qualyyy/vscode-folder-template-generator).
+- Reach out on Discord: **@qualyyy**
 
 ## Extension Guidelines
 
