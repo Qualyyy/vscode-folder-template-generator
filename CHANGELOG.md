@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+## [1.3.1] – 2025-08-13
 ### Fixed
 - Command now works when there are no variables in the structure.
 
