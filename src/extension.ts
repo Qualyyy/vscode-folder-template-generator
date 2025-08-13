@@ -64,6 +64,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const selectedStructure = structures.find(s => s.name === selectedStructureName);
 
 		const structureVariables = selectedStructure.variables;
+		const structureOptionals = selectedStructure.optionals || [];
 
 		// Exit if duplicate variable
 		const uniqueVariables = new Set<string>();
@@ -125,7 +126,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Check optional values
 		const optionals: { [key: string]: boolean } = {};
-		for (const optional of selectedStructure.optionals) {
+		for (const optional of structureOptionals) {
 			if (optional && !(optional in optionals)) {
 				const addItem = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `${optional}?` });
 				if (addItem === undefined) { return; }

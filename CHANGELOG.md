@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Case insensitive 'folder' template:
   - Templates like 'Folder', 'folDER',... are now also seen as 'folder' template.
 
+### Fixed
+- Command now works when there are no optionals in the structure.
+
 ## [1.2.1] – 2025-08-10
 ### Added
 - README badges for the following extension metrics:
