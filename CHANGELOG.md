@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Error message now gives the option to pick a template directory using the systems dialog.
 - Folder in default structure:
   - The default structure now contains 'images' with the template 'folder' as example on how to add folders.
+- Case insensitive 'folder' template:
+  - Templates like 'Folder', 'folDER',... are now also seen as 'folder' template.
 
 ## [1.2.1] – 2025-08-10
 ### Added

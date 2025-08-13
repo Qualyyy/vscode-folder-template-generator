@@ -146,7 +146,7 @@ export function activate(context: vscode.ExtensionContext) {
 		// Create a new file/folder for every item in the structure
 		for (const item of selectedStructure.structure) {
 			const fileName = item.fileName;
-			const fileTemplate = item.template;
+			const fileTemplate = item.template || '';
 			const filePath = path.join(targetPath, fileName);
 
 			// Check for invalid parts in fileName
@@ -191,7 +191,7 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 
 			// Item is a folder
-			if (fileTemplate === 'folder') {
+			if (fileTemplate.toUpperCase() === 'FOLDER') {
 				fs.mkdirSync(filePath, { recursive: true });
 				continue;
 			}
