@@ -13,7 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('folder-template-generator.generateTemplate', async (Uri?: vscode.Uri) => {
 		const config = vscode.workspace.getConfiguration('folderTemplateGenerator');
 		const structures = config.get<any[]>('structures') || [];
-		const templatesDirectory = config.get<string>('templatesDirectory') || '';
+		let templatesDirectory = config.get<string>('templatesDirectory') || '';
 
 		// Exit if user hasn't created any structures
 		if (structures.length === 0) {
@@ -22,13 +22,34 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		if (!fs.existsSync(templatesDirectory)) {
+			let errorMessage = '';
 			if (templatesDirectory.trim() === '') {
-				vscode.window.showErrorMessage('No template directory configured.\nPlease set "folderTemplateGenerator.templatesDirectory" in your settings.', { modal: true });
+				errorMessage = 'No template directory configured.\nPlease set "folderTemplateGenerator.templatesDirectory" in your settings.';
 			}
 			else {
-				vscode.window.showErrorMessage(`The configured templates directory was not found: "${templatesDirectory}".\nPlease update "folderTemplateGenerator.templatesDirectory" in your settings.`, { modal: true });
+				errorMessage = `The configured templates directory was not found: "${templatesDirectory}".\nPlease update "folderTemplateGenerator.templatesDirectory" in your settings.`;
 			}
-			return;
+			const pickDirectory = await vscode.window.showErrorMessage(errorMessage, { modal: true }, 'Pick directory') === 'Pick directory';
+			if (pickDirectory) {
+				const options: vscode.OpenDialogOptions = {
+					canSelectMany: false,
+					openLabel: 'Select directory',
+					canSelectFiles: false,
+					canSelectFolders: true,
+				};
+				const templatesDirectoryUri = await vscode.window.showOpenDialog(options);
+				if (templatesDirectoryUri?.[0]) {
+					templatesDirectory = templatesDirectoryUri[0].fsPath.replaceAll('\\', '/');
+					vscode.workspace.getConfiguration('folderTemplateGenerator').update('templatesDirectory', templatesDirectory, vscode.ConfigurationTarget.Global);
+					vscode.window.showInformationMessage(`Updated templatesDirectory to ${templatesDirectory}.\n Select the parent folder for your project next.`, { modal: true });
+				} else {
+					vscode.window.showErrorMessage('No directory selected', { modal: true });
+					return;
+				}
+			}
+			else {
+				return;
+			}
 		}
 
 		// Get the target path
