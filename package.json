@@ -131,6 +131,10 @@
                     "fileName": "index.html",
                     "template": "index.html",
                     "optional": "addIndexHtml"
+                  },
+                  {
+                    "fileName": "images",
+                    "template": "folder"
                   }
                 ]
               }
