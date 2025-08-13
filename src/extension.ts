@@ -63,7 +63,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (!selectedStructureName) { return; }
 		const selectedStructure = structures.find(s => s.name === selectedStructureName);
 
-		const structureVariables = selectedStructure.variables;
+		const structureVariables = selectedStructure.variables || [];
 		const structureOptionals = selectedStructure.optionals || [];
 
 		// Exit if duplicate variable
