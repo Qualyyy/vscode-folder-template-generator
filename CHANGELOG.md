@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+- 
+
+## [1.3.0] – 2025-08-13
 ### Added
 - Option to pick a template directory when not configured:
   - Error message now gives the option to pick a template directory using the systems dialog.
