@@ -100,12 +100,12 @@ export function activate(context: vscode.ExtensionContext) {
 				const folderName = await vscode.window.showInputBox({ title: 'folderName', value: selectedStructureName });
 				if (!folderName) { return; }
 				if (!isValidName(folderName)) {
-					vscode.window.showErrorMessage('Invalid folder name. Avoid special characters and reserved names', { modal: true });
+					await vscode.window.showErrorMessage('Invalid folder name. Avoid special characters and reserved names', { modal: true });
 					continue;
 				}
 				newFolderPath = path.join(targetPath, folderName);
 				if (fs.existsSync(newFolderPath)) {
-					vscode.window.showErrorMessage(`Folder "${folderName}" already exists. Please choose another name.`, { modal: true });
+					await vscode.window.showErrorMessage(`Folder "${folderName}" already exists. Please choose another name.`, { modal: true });
 					continue;
 				}
 				createdItems.push(newFolderPath);

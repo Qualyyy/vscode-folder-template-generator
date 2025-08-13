@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Fixed
+- Command now keeps prompting for the folder name when it's invalid.
 
 ## [1.3.1] – 2025-08-13
 ### Fixed
