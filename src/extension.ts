@@ -184,7 +184,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 			// Add folders and files to arrays
 			for (const i in fileNameParts) {
-				// const itemPath = fileNameParts.slice(0, i + 1).reduce((acc: string, curr: string) => acc + curr, '');
 				const itemPath = path.join(targetPath, ...fileNameParts.slice(0, Number(i) + 1));
 				if (!fs.existsSync(itemPath) && !createdItems.includes(itemPath)) {
 					createdItems.push(itemPath);
