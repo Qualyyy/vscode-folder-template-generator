@@ -17,15 +17,18 @@ export function isValidName(name: string): boolean {
 }
 
 export async function validateStructures(structures: any[]): Promise<boolean> {
-    console.log(structures);
+    // No structures
     if (structures.length === 0) {
         await vscode.window.showErrorMessage('You haven\'t created any structures.\nPlease create a structure in your settings.json', { modal: true });
         return false;
     }
+
+    // 1 or more structures with empty name
     const emptyNameStructures = structures.filter(s => !s.name || s.name.trim() === '');
     if (emptyNameStructures.length > 0) {
         await vscode.window.showErrorMessage('One or more structures have an empty name. Please update your settings.', { modal: true });
         return false;
     }
+
     return true;
 }
