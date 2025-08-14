@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added util `configUtils.ts` to collect user settings and handle the template directory path.
 - Structure gathering:
   - Added util `promptUtils.ts` to prompt the user to select a structure and gather all related properties.
+- Moved validation for user's structures to `validation.ts`.
 
 ### Fixed
 - Command now keeps prompting for the folder name when it's invalid.

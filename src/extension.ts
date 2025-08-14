@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 import { getTargetPath } from './utils/pathUtils';
-import { isValidName } from './utils/validation';
+import { isValidName, validateStructures } from './utils/validation';
 import { createFileContent } from './utils/createFileContent';
 import { getConfig } from './utils/configUtils';
 import { promptStructureSelect } from './utils/promptUtils';
@@ -12,13 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Get the user's set structures and templatesDirectory
 		const { structures, templatesDirectory } = await getConfig();
-		if (structures.length === 0) {
-			await vscode.window.showErrorMessage('You haven\'t created any structures.\nPlease create a structure in your settings.json', { modal: true });
-			return;
-		}
-		const emptyNameStructures = structures.filter(s => !s.name || s.name.trim() === '');
-		if (emptyNameStructures.length > 0) {
-			await vscode.window.showErrorMessage('One or more structures have an empty name. Please update your settings.', { modal: true });
+		if (!(await validateStructures(structures))) {
 			return;
 		}
 		if (!templatesDirectory) {
