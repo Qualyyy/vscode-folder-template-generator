@@ -10,7 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Renamed folder 'images' to 'resources' in projects directory.
 - User configuration gathering:
-  - Separate util 'configUtils.ts' now collects user settings and handles the template directory path.
+  - Added util `configUtils.ts` to collect user settings and handle the template directory path.
+- Structure gathering:
+  - Added util `promptUtils.ts` to prompt the user to select a structure and gather all related properties.
 
 ### Fixed
 - Command now keeps prompting for the folder name when it's invalid.

@@ -5,6 +5,7 @@ import { getTargetPath } from './utils/pathUtils';
 import { isValidName } from './utils/validation';
 import { createFileContent } from './utils/createFileContent';
 import { getConfig } from './utils/configUtils';
+import { promptStructureSelect } from './utils/promptUtils';
 
 export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('folder-template-generator.generateTemplate', async (Uri?: vscode.Uri) => {
@@ -26,15 +27,11 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 
-		const structureNames = structures.map(structure => structure.name);
-
 		// Prompt user to select a structure
-		const selectedStructureName = await vscode.window.showQuickPick(structureNames, { placeHolder: 'Select a structure' });
-		if (!selectedStructureName) { return; }
-		const selectedStructure = structures.find(s => s.name === selectedStructureName);
-
-		const structureVariables = selectedStructure.variables || [];
-		const structureOptionals = selectedStructure.optionals || [];
+		const { structureName, structureVariables, structureOptionals, structureStructure } = await promptStructureSelect(structures);
+		if (!structureName) {
+			return;
+		}
 
 		// Exit if duplicate variable
 		const uniqueVariables = new Set<string>();
@@ -48,7 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Exit if duplicate file
 		const uniqueFiles = new Set<string>();
-		for (const file of selectedStructure.structure) {
+		for (const file of structureStructure) {
 			if (uniqueFiles.has(file.fileName)) {
 				vscode.window.showErrorMessage(`Duplicate file '${file.fileName}'. Please update your structure`, { modal: true });
 				return;
@@ -67,7 +64,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (createNewFolder) {
 			while (true) {
 				let newFolderPath = '';
-				const folderName = await vscode.window.showInputBox({ title: 'folderName', value: selectedStructureName });
+				const folderName = await vscode.window.showInputBox({ title: 'folderName', value: structureName });
 				if (!folderName) { return; }
 				if (!isValidName(folderName)) {
 					await vscode.window.showErrorMessage('Invalid folder name. Avoid special characters and reserved names', { modal: true });
@@ -115,7 +112,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		// Create a new file/folder for every item in the structure
-		for (const item of selectedStructure.structure) {
+		for (const item of structureStructure) {
 			const fileName = item.fileName;
 			const fileTemplate = item.template || '';
 			const filePath = path.join(targetPath, fileName);
