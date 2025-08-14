@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Command now keeps prompting for the folder name when it's invalid.
+- Command now correctly cancels when no parent folder is selected.
 
 ## [1.3.1] – 2025-08-13
 ### Fixed

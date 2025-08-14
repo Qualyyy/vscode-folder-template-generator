@@ -55,6 +55,10 @@ export function activate(context: vscode.ExtensionContext) {
 		// Get the target path
 
 		let { targetPath, createNewFolder } = await getTargetPath(Uri);
+		if (!targetPath) {
+			vscode.window.showErrorMessage('No folder selected', { modal: true });
+			return;
+		}
 
 		const structureNames = structures.map(structure => structure.name);
 
