@@ -16,6 +16,11 @@ export function activate(context: vscode.ExtensionContext) {
 			await vscode.window.showErrorMessage('You haven\'t created any structures.\nPlease create a structure in your settings.json', { modal: true });
 			return;
 		}
+		const emptyNameStructures = structures.filter(s => !s.name || s.name.trim() === '');
+		if (emptyNameStructures.length > 0) {
+			await vscode.window.showErrorMessage('One or more structures have an empty name. Please update your settings.', { modal: true });
+			return;
+		}
 		if (!templatesDirectory) {
 			return;
 		}
