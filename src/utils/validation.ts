@@ -16,7 +16,7 @@ export function isValidName(name: string): boolean {
     return true;
 }
 
-export async function validateConfig(structures: any[]): Promise<boolean> {
+export async function validateConfig(structures: any[], templatesDirectory: string): Promise<boolean> {
     // No structures
     if (structures.length === 0) {
         await vscode.window.showErrorMessage('You haven\'t created any structures.\nPlease create a structure in your settings.json', { modal: true });
@@ -27,6 +27,11 @@ export async function validateConfig(structures: any[]): Promise<boolean> {
     const emptyNameStructures = structures.filter(s => !s.name || s.name.trim() === '');
     if (emptyNameStructures.length > 0) {
         await vscode.window.showErrorMessage('One or more structures have an empty name. Please update your settings.', { modal: true });
+        return false;
+    }
+
+    // No templatesDirectory
+    if (!templatesDirectory) {
         return false;
     }
 

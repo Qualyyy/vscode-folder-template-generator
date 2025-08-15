@@ -12,10 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Get the user's set structures and templatesDirectory
 		const { structures, templatesDirectory } = await getConfig();
-		if (!(await validateConfig(structures))) {
-			return;
-		}
-		if (!templatesDirectory) {
+		if (!(await validateConfig(structures, templatesDirectory))) {
 			return;
 		}
 
