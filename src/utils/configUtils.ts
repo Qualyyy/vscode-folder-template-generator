@@ -1,9 +1,10 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
+import { Structure } from '../types';
 
-export async function getConfig(): Promise<{ structures: any[], templatesDirectory: string }> {
+export async function getConfig(): Promise<{ structures: Structure[], templatesDirectory: string }> {
     const config = vscode.workspace.getConfiguration('folderTemplateGenerator');
-    const structures = config.get<any[]>('structures') || [];
+    const structures = config.get<Structure[]>('structures') || [];
     let templatesDirectory = config.get<string>('templatesDirectory') || '';
 
 

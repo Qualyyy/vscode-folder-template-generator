@@ -1,18 +1,29 @@
 import * as vscode from 'vscode';
+import { Structure, StructureItem, Variable } from '../types';
 
-export async function promptStructureSelect(structures: any[]): Promise<{
+export async function promptStructureSelect(structures: Structure[]): Promise<{
     structureName: string,
-    structureVariables: any[],
-    structureOptionals: any[],
-    structureStructure: any[]
+    structureVariables: Variable[],
+    structureOptionals: string[],
+    structureStructure: StructureItem[]
 }> {
     const structureNames = structures.map(structure => structure.name);
-    const selectedStructureName = await vscode.window.showQuickPick(structureNames, { placeHolder: 'Select a structure' }) || '';
-    const selectedStructure = structures.find(s => s.name === selectedStructureName) || {};
-    const structureName = selectedStructure.name || '';
-    const structureVariables = selectedStructure.variables || [];
-    const structureOptionals = selectedStructure.optionals || [];
-    const structureStructure = selectedStructure.structure || [];
+    const structureName = await vscode.window.showQuickPick(structureNames, { placeHolder: 'Select a structure' }) || '';
+    const selectedStructure = structures.find(s => s.name === structureName);
 
-    return { structureName, structureVariables, structureOptionals, structureStructure };
+    if (!selectedStructure) {
+        return {
+            structureName,
+            structureVariables: [],
+            structureOptionals: [],
+            structureStructure: []
+        };
+    }
+
+    return {
+        structureName,
+        structureVariables: selectedStructure.variables || [],
+        structureOptionals: selectedStructure.optionals || [],
+        structureStructure: selectedStructure.structure || []
+    };
 }

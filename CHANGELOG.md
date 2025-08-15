@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Moved validation for user's structures to `validation.ts`.
 - Renamed function 'validateStructures' to 'validateConfig':
   - Moved validation for empty templatesDirectory to this function.
+- Interfaces:
+  - Defined 'Structure', 'Variable', and 'StructureItem' in `index.ts`.
+  - Replaced all 'any' and 'any[]' usages with the new interfaces.
 
 ### Fixed
 - Command now keeps prompting for the folder name when it's invalid.

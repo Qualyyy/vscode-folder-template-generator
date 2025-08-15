@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { Structure } from '../types';
 
 export function isValidName(name: string): boolean {
     const forbidden = /[\\\/:\*\?"<>\|]/;
@@ -16,7 +17,7 @@ export function isValidName(name: string): boolean {
     return true;
 }
 
-export async function validateConfig(structures: any[], templatesDirectory: string): Promise<boolean> {
+export async function validateConfig(structures: Structure[], templatesDirectory: string): Promise<boolean> {
     // No structures
     if (structures.length === 0) {
         await vscode.window.showErrorMessage('You haven\'t created any structures.\nPlease create a structure in your settings.json', { modal: true });
