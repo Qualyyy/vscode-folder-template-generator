@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Structure gathering:
   - Added util `promptUtils.ts` to prompt the user to select a structure and gather all related properties.
 - Moved validation for user's structures to `validation.ts`.
+- Renamed function 'validateStructures' to 'validateConfig'.
 
 ### Fixed
 - Command now keeps prompting for the folder name when it's invalid.

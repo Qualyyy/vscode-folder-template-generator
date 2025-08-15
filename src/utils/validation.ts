@@ -16,7 +16,7 @@ export function isValidName(name: string): boolean {
     return true;
 }
 
-export async function validateStructures(structures: any[]): Promise<boolean> {
+export async function validateConfig(structures: any[]): Promise<boolean> {
     // No structures
     if (structures.length === 0) {
         await vscode.window.showErrorMessage('You haven\'t created any structures.\nPlease create a structure in your settings.json', { modal: true });

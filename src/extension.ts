@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 import { getTargetPath } from './utils/pathUtils';
-import { isValidName, validateStructures } from './utils/validation';
+import { isValidName, validateConfig } from './utils/validation';
 import { createFileContent } from './utils/createFileContent';
 import { getConfig } from './utils/configUtils';
 import { promptStructureSelect } from './utils/promptUtils';
@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Get the user's set structures and templatesDirectory
 		const { structures, templatesDirectory } = await getConfig();
-		if (!(await validateStructures(structures))) {
+		if (!(await validateConfig(structures))) {
 			return;
 		}
 		if (!templatesDirectory) {
