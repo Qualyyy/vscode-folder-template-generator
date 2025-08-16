@@ -133,7 +133,7 @@ export function activate(context: vscode.ExtensionContext) {
 				continue;
 			}
 
-			// Skip item if optional true
+			// Skip item if optional false
 			if (item.optional) {
 				if (!optionals[item.optional]) {
 					vscode.window.showInformationMessage(`Skipped ${fileName}`);
