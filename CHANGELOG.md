@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Validation for structure names:
   - Shows modal error message when an empty structure name is detected.
+  - Shows modal error message when a duplicate structure name is detected.
 
 ### Changed
 - Renamed folder 'images' to 'resources' in projects directory.

@@ -31,6 +31,16 @@ export async function validateConfig(structures: Structure[], templatesDirectory
         return false;
     }
 
+    // Structures with the same name
+    const uniqueStructureNames = new Set<string>();
+    for (const structure of structures) {
+        if (uniqueStructureNames.has(structure.name)) {
+            vscode.window.showErrorMessage(`Duplicate structure name '${structure.name}'. Please update your structure`, { modal: true });
+            return false;
+        }
+        uniqueStructureNames.add(structure.name);
+    }
+
     // No templatesDirectory
     if (!templatesDirectory) {
         return false;
