@@ -23,10 +23,15 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		// Prompt user to select a structure
-		const { structureName, structureVariables, structureOptionals, structureStructure } = await promptStructureSelect(structures);
-		if (!structureName) {
+		const selectedStructure = await promptStructureSelect(structures);
+		if (!selectedStructure) {
 			return;
 		}
+
+		const structureName = selectedStructure.name;
+		const structureVariables = selectedStructure.variables || [];
+		const structureOptionals = selectedStructure.optionals || [];
+		const structureStructure = selectedStructure.structure || [];
 
 		// Exit if duplicate variable
 		const uniqueVariables = new Set<string>();
