@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Renamed function 'validateStructures' to 'validateConfig':
   - Moved validation for empty templatesDirectory to this function.
 - Interfaces:
-  - Defined 'Structure', 'Variable', and 'StructureItem' in `index.ts`.
+  - Defined 'Structure', 'Variable', 'optional' and 'StructureItem' in `index.ts`.
   - Replaced all 'any' and 'any[]' usages with the new interfaces.
 
 ### Fixed

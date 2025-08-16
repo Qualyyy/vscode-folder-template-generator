@@ -93,15 +93,15 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Check optional values
 		const optionals: { [key: string]: boolean } = {};
-		for (const optional of structureOptionals) {
-			if (optional && !(optional in optionals)) {
-				const addItem = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `${optional}?` });
+		if (structureOptionals) {
+			for (const optional of structureOptionals) {
+				const addItem = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `${optional.optName}?` });
 				if (addItem === undefined) { return; }
 				if (addItem === 'Yes') {
-					optionals[optional] = true; // Add these items
+					optionals[optional.optName] = true; // Add these items
 					continue;
 				}
-				optionals[optional] = false; // Don't add these items
+				optionals[optional.optName] = false; // Don't add these items
 			}
 		}
 		console.log(variables);

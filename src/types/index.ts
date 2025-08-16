@@ -1,13 +1,18 @@
 export interface Structure {
     name: string;
     variables?: Variable[];
-    optionals?: string[];
+    optionals?: Optional[];
     structure: StructureItem[];
 }
 
 export interface Variable {
     varName: string;
     default?: string;
+}
+
+export interface Optional {
+    optName: string;
+    value?: boolean;
 }
 
 export interface StructureItem {
