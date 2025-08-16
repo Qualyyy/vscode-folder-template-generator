@@ -21,6 +21,9 @@ export async function getTargetPath(Uri?: vscode.Uri): Promise<{ targetPath: str
             targetPath = parentFolderUri[0].fsPath;
             createNewFolder = true;
         }
+        else {
+            vscode.window.showErrorMessage('No folder selected', { modal: true });
+        }
     }
     return { targetPath, createNewFolder };
 }
