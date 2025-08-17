@@ -48,3 +48,30 @@ export async function validateConfig(structures: Structure[], templatesDirectory
 
     return true;
 }
+
+export async function isValidStructure(structure: Structure): Promise<boolean> {
+    const structureVariables = structure.variables || [];
+    const structureStructure = structure.structure || [];
+
+    // Exit if duplicate variable
+    const uniqueVariables = new Set<string>();
+    for (const variable of structureVariables) {
+        if (uniqueVariables.has(variable.varName)) {
+            vscode.window.showErrorMessage(`Duplicate variable '${variable.varName}'. Please update your structure`, { modal: true });
+            return false;
+        }
+        uniqueVariables.add(variable.varName);
+    }
+
+    // Exit if duplicate file
+    const uniqueFiles = new Set<string>();
+    for (const file of structureStructure) {
+        if (uniqueFiles.has(file.fileName)) {
+            vscode.window.showErrorMessage(`Duplicate file '${file.fileName}'. Please update your structure`, { modal: true });
+            return false;
+        }
+        uniqueFiles.add(file.fileName);
+    }
+
+    return true;
+}

@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 import { getTargetPath } from './utils/pathUtils';
-import { isValidName, validateConfig } from './utils/validation';
+import { isValidName, isValidStructure, validateConfig } from './utils/validation';
 import { createFileContent, skipFile } from './utils/fileUtils';
 import { getConfig } from './utils/configUtils';
 import { promptStructureSelect } from './utils/promptUtils';
@@ -24,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Prompt user to select a structure
 		const selectedStructure = await promptStructureSelect(structures);
-		if (!selectedStructure) {
+		if (!selectedStructure || !(await isValidStructure(selectedStructure))) {
 			return;
 		}
 
@@ -32,26 +32,6 @@ export function activate(context: vscode.ExtensionContext) {
 		const structureVariables = selectedStructure.variables || [];
 		const structureOptionals = selectedStructure.optionals || [];
 		const structureStructure = selectedStructure.structure || [];
-
-		// Exit if duplicate variable
-		const uniqueVariables = new Set<string>();
-		for (const variable of structureVariables) {
-			if (uniqueVariables.has(variable.varName)) {
-				vscode.window.showErrorMessage(`Duplicate variable '${variable.varName}'. Please update your structure`, { modal: true });
-				return;
-			}
-			uniqueVariables.add(variable.varName);
-		}
-
-		// Exit if duplicate file
-		const uniqueFiles = new Set<string>();
-		for (const file of structureStructure) {
-			if (uniqueFiles.has(file.fileName)) {
-				vscode.window.showErrorMessage(`Duplicate file '${file.fileName}'. Please update your structure`, { modal: true });
-				return;
-			}
-			uniqueFiles.add(file.fileName);
-		}
 
 		// Ask user if they want to create a new folder
 		if (!createNewFolder) {
