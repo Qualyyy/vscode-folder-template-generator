@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { getTargetPath } from './utils/pathUtils';
 import { isValidName, validateConfig } from './utils/validation';
-import { createFileContent } from './utils/createFileContent';
+import { createFileContent } from './utils/fileUtils';
 import { getConfig } from './utils/configUtils';
 import { promptStructureSelect } from './utils/promptUtils';
 

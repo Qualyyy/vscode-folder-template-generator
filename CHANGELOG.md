@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Interfaces:
   - Defined 'Structure', 'Variable', 'optional' and 'StructureItem' in `index.ts`.
   - Replaced all 'any' and 'any[]' usages with the new interfaces.
+- Renamed 'createFileContents.ts' to 'fileUtils.ts'.
 
 ### Fixed
 - Command now keeps prompting for the folder name when it's invalid.
