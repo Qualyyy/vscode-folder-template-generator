@@ -11,10 +11,12 @@ export async function promptStructureSelect(structures: any[]): Promise<Structur
     }
 
     const structure: Structure = { ...selectedStructure };
-    structure.optionals = selectedStructure.optionals.map((optName: string) => ({
-        optName,
-        value: undefined
-    }));
+    if (selectedStructure.optionals) {
+        structure.optionals = selectedStructure.optionals.map((optName: string) => ({
+            optName,
+            value: undefined
+        }));
+    }
 
     return structure;
 }
