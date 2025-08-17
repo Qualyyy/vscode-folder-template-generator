@@ -27,9 +27,8 @@ export function createFileContent(fileTemplatePath: string, variables: { [key: s
                             skipPart = true;
                             break;
                         }
-                        // Remove marker if true
-                        part = part.replace(match[0], '');
                     }
+                    part = part.replace(match[0], '');
                 }
             }
             if (!skipPart) {
