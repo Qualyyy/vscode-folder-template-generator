@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { getTargetPath } from './utils/pathUtils';
 import { isValidName, validateConfig } from './utils/validation';
-import { createFileContent } from './utils/fileUtils';
+import { createFileContent, skipFile } from './utils/fileUtils';
 import { getConfig } from './utils/configUtils';
 import { promptStructureSelect } from './utils/promptUtils';
 
@@ -117,39 +117,14 @@ export function activate(context: vscode.ExtensionContext) {
 			const fileTemplate = item.template || '';
 			const filePath = path.join(targetPath, fileName);
 
-			// Check for invalid parts in fileName
-			const fileNameParts = fileName.split(/[\\/]/);
-			let invalidPart;
-			for (const part of fileNameParts) {
-				if (!isValidName(part)) {
-					invalidPart = part;
-					break;
-				}
-			}
-
-			// Skip item if the name is invalid
-			if (invalidPart) {
-				vscode.window.showErrorMessage(`Skipping ${fileName}, fileName is invalid. Avoid special characters and reserved names. Please update your template`);
-				continue;
-			}
-
-			// Skip item if optional false
-			if (item.optional) {
-				if (item.optional in optionals && !optionals[item.optional]) {
-					vscode.window.showInformationMessage(`Skipped ${fileName}`);
-					continue;
-				}
-			}
-
-			// Skip items if exists
-			if (fs.existsSync(filePath)) {
-				vscode.window.showInformationMessage(`${fileName} already exists, skipping...`);
+			if (skipFile(item, filePath, optionals)) {
 				continue;
 			}
 
 			// Add the item
 
 			// Add folders and files to arrays
+			const fileNameParts = fileName.split(/[\\/]/);
 			for (const i in fileNameParts) {
 				const itemPath = path.join(targetPath, ...fileNameParts.slice(0, Number(i) + 1));
 				if (!fs.existsSync(itemPath) && !createdItems.includes(itemPath)) {
