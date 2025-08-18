@@ -13,29 +13,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Shows modal error message when a duplicate structure name is detected.
 
 ### Changed
-- Renamed folder 'images' to 'resources' in projects directory.
-- User configuration gathering:
-  - Added util `configUtils.ts` to collect user settings and handle the template directory path.
-- Structure gathering:
-  - Added util `promptUtils.ts` to prompt the user to select a structure and gather all related properties.
-- Moved validation for user's structures to `validation.ts`.
-- Moved validation for selected structure to `validation.ts`.
-- Renamed function 'validateStructures' to 'validateConfig':
-  - Moved validation for empty templatesDirectory to this function.
+- Project structure:
+  - Renamed folder 'images' to 'resources' in projects directory.
+  - Renamed file 'createFileContents.ts' to 'fileUtils.ts'.
+    - Checking whether a structure item should be skipped now happens in this file.
+- Utilities:
+  - Added util 'configUtils.ts' to collect user settings and handle the template directory path.
+  - Added util 'promptUtils.ts' to prompt the user to select a structure.
+- Validation:
+  - Moved validation for user's structures to 'validation.ts'.
+  - Moved validation for selected structure to 'validation.ts'.
+  - Renamed function 'validateStructures' to 'validateConfig' and moved validation for empty templatesDirectory to this function.
 - Interfaces:
-  - Defined 'Structure', 'Variable', 'optional' and 'StructureItem' in `index.ts`.
+  - Defined 'Structure', 'Variable', 'Optional' and 'StructureItem' in 'index.ts'.
   - Replaced all 'any' and 'any[]' usages with the new interfaces.
-- Renamed file 'createFileContents.ts' to 'fileUtils.ts'.
-  - Checking if the structure item should be skipped now happens in this file.
 
 ### Fixed
 - Command now keeps prompting for the folder name when it's invalid.
 - Command now correctly cancels when no parent folder is selected.
 - Optional items and lines now get added when the optional is not defined in the structure.
 
+
 ## [1.3.1] – 2025-08-13
 ### Fixed
 - Command now works when there are no variables in the structure.
+
 
 ## [1.3.0] – 2025-08-13
 ### Added
@@ -49,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Command now works when there are no optionals in the structure.
 
+
 ## [1.2.1] – 2025-08-10
 ### Added
 - README badges for the following extension metrics:
@@ -56,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Updated README to show more correct information and better examples.
+
 
 ## [1.2.0] – 2025-08-09
 ### Added
@@ -69,6 +73,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Command now works when deciding not to create a new folder.
 
+
 ## [1.1.0] – 2025-08-09
 ### Added
 - Validation for `folderTemplateGenerator.templatesDirectory`:
@@ -76,6 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Shows a modal error if the configured directory **does not exist**.
   - Provides clear instructions in the error message to update the setting.
 - Changelog link in README
+
 
 ## [1.0.0] – 2025-08-09
 ### Added
