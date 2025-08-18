@@ -18,12 +18,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Renamed file 'createFileContents.ts' to 'fileUtils.ts'.
     - Checking whether a structure item should be skipped now happens in this file.
 - Utilities:
-  - Added util 'configUtils.ts' to collect user settings and handle the template directory path.
-  - Added util 'promptUtils.ts' to prompt the user to select a structure.
-- Validation:
-  - Moved validation for user's structures to 'validation.ts'.
-  - Moved validation for selected structure to 'validation.ts'.
-  - Renamed function 'validateStructures' to 'validateConfig' and moved validation for empty templatesDirectory to this function.
+  - Added util 'configUtils.ts':
+    - Collects user settings and handles the template directory path.
+  - Added util 'promptUtils.ts':
+    - Prompts the user to select a structure.
+    - Prompts the user for the folder name when creating a new folder.
+  - Util 'validation.ts':
+    - Moved validation for user's structures to 'validation.ts'.
+    - Moved validation for selected structure to 'validation.ts'.
+    - Renamed function 'validateStructures' to 'validateConfig' and moved validation for empty templatesDirectory to this function.
 - Interfaces:
   - Defined 'Structure', 'Variable', 'Optional' and 'StructureItem' in 'index.ts'.
   - Replaced all 'any' and 'any[]' usages with the new interfaces.

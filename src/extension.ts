@@ -5,7 +5,7 @@ import { getTargetPath } from './utils/pathUtils';
 import { isValidName, isValidStructure, validateConfig } from './utils/validation';
 import { createFileContent, skipFile } from './utils/fileUtils';
 import { getConfig } from './utils/configUtils';
-import { promptStructureSelect } from './utils/promptUtils';
+import { promptNewFolderName, promptStructureSelect } from './utils/promptUtils';
 
 export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('folder-template-generator.generateTemplate', async (Uri?: vscode.Uri) => {
@@ -42,23 +42,12 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Create new folder and change target path if createNewFolder is true
 		if (createNewFolder) {
-			while (true) {
-				let newFolderPath = '';
-				const folderName = await vscode.window.showInputBox({ title: 'folderName', value: structureName });
-				if (!folderName) { return; }
-				if (!isValidName(folderName)) {
-					await vscode.window.showErrorMessage('Invalid folder name. Avoid special characters and reserved names', { modal: true });
-					continue;
-				}
-				newFolderPath = path.join(targetPath, folderName);
-				if (fs.existsSync(newFolderPath)) {
-					await vscode.window.showErrorMessage(`Folder "${folderName}" already exists. Please choose another name.`, { modal: true });
-					continue;
-				}
-				createdItems.push(newFolderPath);
-				targetPath = newFolderPath;
-				break;
+			const result = await promptNewFolderName(targetPath, structureName);
+			if (!result) {
+				return;
 			}
+			targetPath = result;
+			createdItems.push(targetPath);
 		}
 
 		// Check variables
