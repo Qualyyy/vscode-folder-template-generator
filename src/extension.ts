@@ -5,7 +5,7 @@ import { getTargetPath } from './utils/pathUtils';
 import { isValidName, isValidStructure, validateConfig } from './utils/validation';
 import { createFileContent, skipFile } from './utils/fileUtils';
 import { getConfig } from './utils/configUtils';
-import { promptNewFolderName, promptStructureSelect } from './utils/promptUtils';
+import { promptNewFolderName, promptStructureSelect, promptValues } from './utils/promptUtils';
 
 export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('folder-template-generator.generateTemplate', async (Uri?: vscode.Uri) => {
@@ -42,40 +42,24 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Create new folder and change target path if createNewFolder is true
 		if (createNewFolder) {
-			const result = await promptNewFolderName(targetPath, structureName);
-			if (!result) {
+			const newFolderNameResult = await promptNewFolderName(targetPath, structureName);
+			if (!newFolderNameResult) {
 				return;
 			}
-			targetPath = result;
+			targetPath = newFolderNameResult;
 			createdItems.push(targetPath);
 		}
 
-		// Check variables
-		const variables: { [key: string]: string } = {};
-		if (structureVariables) {
-			for (const variable of structureVariables) {
-				const value = await vscode.window.showInputBox({ prompt: variable.varName, value: variable.default });
-				if (!value) { return; }
-				variables[variable.varName] = value;
-			}
+		// Get values for variables and optionals
+		const valuesResult = await promptValues(structureVariables, structureOptionals);
+		if (!valuesResult) {
+			return;
 		}
-
-		// Check optional values
-		const optionals: { [key: string]: boolean } = {};
-		if (structureOptionals) {
-			for (const optional of structureOptionals) {
-				const addItem = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `${optional.optName}?` });
-				if (addItem === undefined) { return; }
-				if (addItem === 'Yes') {
-					optionals[optional.optName] = true; // Add these items
-					continue;
-				}
-				optionals[optional.optName] = false; // Don't add these items
-			}
-		}
+		const { variables, optionals } = valuesResult;
 		console.log(variables);
 		console.log(optionals);
 
+		// Create new folder if needed
 		if (createNewFolder) {
 			fs.mkdirSync(targetPath);
 		}

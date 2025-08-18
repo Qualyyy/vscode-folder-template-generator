@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added util 'promptUtils.ts':
     - Prompts the user to select a structure.
     - Prompts the user for the folder name when creating a new folder.
+    - Prompts the user for values of variables and optionals.
   - Util 'validation.ts':
     - Moved validation for user's structures to 'validation.ts'.
     - Moved validation for selected structure to 'validation.ts'.

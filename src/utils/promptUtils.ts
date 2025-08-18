@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Structure } from '../types';
+import { Optional, Structure, Variable } from '../types';
 import { isValidName } from './validation';
 
 export async function promptStructureSelect(structures: any[]): Promise<Structure | null> {
@@ -42,4 +42,33 @@ export async function promptNewFolderName(targetPath: string, structureName: str
         break;
     }
     return targetPath;
+}
+
+export async function promptValues(structureVariables: Variable[], structureOptionals: Optional[]): Promise<{
+    variables: { [key: string]: string }, optionals: { [key: string]: boolean }
+} | null> {
+    const variables: { [key: string]: string } = {};
+    if (structureVariables) {
+        for (const variable of structureVariables) {
+            const value = await vscode.window.showInputBox({ prompt: variable.varName, value: variable.default });
+            if (!value) { return null; }
+            variables[variable.varName] = value;
+        }
+    }
+
+    // Check optional values
+    const optionals: { [key: string]: boolean } = {};
+    if (structureOptionals) {
+        for (const optional of structureOptionals) {
+            const addItem = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `${optional.optName}?` });
+            if (addItem === undefined) { return null; }
+            if (addItem === 'Yes') {
+                optionals[optional.optName] = true; // Add these items
+                continue;
+            }
+            optionals[optional.optName] = false; // Don't add these items
+        }
+    }
+
+    return { variables, optionals };
 }
