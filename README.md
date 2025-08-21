@@ -32,6 +32,8 @@
 5. The extension creates the specified folders and files, filling in templates with your values and skipping invalid or existing items.
 6. **Optionally revert**: After creation, you can undo all generated items with one click.
 
+📖 **Want more detailed guidance?** Check out the [Complete Step-by-Step Guide](https://docs.google.com/presentation/d/e/2PACX-1vSPi0L-s6cIFdp5_Mvl-JmGZOViShL173VcsrdKZB162sVvIIpKY8JaP0dBjlYlfdc8kyl0KTBnueOM/pub?start=false&loop=false) for step-by-step examples.
+
 ## Extension Settings
 
 This extension contributes the following settings:
