@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Information message after picking a template directory is now correct.
+- Await modal error message after nonexistent template to prevent command cancellation.
 
 
 ## [1.4.1] – 2025-08-21

@@ -98,7 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
 			if (fileTemplate) {
 				const fileTemplatePath = path.join(templatesDirectory, fileTemplate);
 				if (!fs.existsSync(fileTemplatePath)) {
-					vscode.window.showErrorMessage(`Could not find template "${fileTemplatePath}".\nPlease verify that the file exists and update your settings.json if needed.`, { modal: true });
+					await vscode.window.showErrorMessage(`Could not find template "${fileTemplatePath}".\nPlease verify that the file exists and update your settings.json if needed.`, { modal: true });
 					vscode.window.showInformationMessage(`Empty file "${fileName}" created (template not found)`);
 				}
 				else {
