@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [1.4.1] – 2025-08-21
+### Added
+- Link to the google slides guide under 'How It Works' in the README.
+
+
 ## [1.4.0] – 2025-08-21
 ### Added
 - Validation for structure names:
