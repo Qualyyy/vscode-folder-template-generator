@@ -143,7 +143,6 @@ After creation, you can instantly revert all created files and folders.
 
 - Only works in local workspaces (not remote or virtual workspaces).
 - Does not support advanced template logic (like loops or conditionals).
-- If a variable is missing from the template, it will be left as `[variableName]` in the output.
 
 ## Changelog
 

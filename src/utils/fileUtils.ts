@@ -1,5 +1,43 @@
 import * as fs from 'fs';
-import * as path from 'path';
+import * as vscode from 'vscode';
+import { StructureItem } from '../types';
+import { isValidName } from './validation';
+
+export function skipFile(item: StructureItem, filePath: string, optionals: { [key: string]: boolean; }): boolean {
+    const fileName = item.fileName;
+
+    // Check for invalid parts in fileName
+    const fileNameParts = fileName.split(/[\\/]/);
+    let invalidPart;
+    for (const part of fileNameParts) {
+        if (!isValidName(part)) {
+            invalidPart = part;
+            break;
+        }
+    }
+
+    // Skip item if the name is invalid
+    if (invalidPart) {
+        vscode.window.showErrorMessage(`Skipping ${fileName}, fileName is invalid. Avoid special characters and reserved names. Please update your template`);
+        return true;
+    }
+
+    // Skip item if optional false
+    if (item.optional) {
+        if (item.optional in optionals && !optionals[item.optional]) {
+            vscode.window.showInformationMessage(`Skipped ${fileName}`);
+            return true;
+        }
+    }
+
+    // Skip items if exists
+    if (fs.existsSync(filePath)) {
+        vscode.window.showInformationMessage(`${fileName} already exists, skipping...`);
+        return true;
+    }
+
+    return false;
+}
 
 export function createFileContent(fileTemplatePath: string, variables: { [key: string]: string }, optionals: { [key: string]: boolean }): string {
     const templateContent = fs.readFileSync(fileTemplatePath, 'utf8');
@@ -27,9 +65,8 @@ export function createFileContent(fileTemplatePath: string, variables: { [key: s
                             skipPart = true;
                             break;
                         }
-                        // Remove marker if true
-                        part = part.replace(match[0], '');
                     }
+                    part = part.replace(match[0], '');
                 }
             }
             if (!skipPart) {
