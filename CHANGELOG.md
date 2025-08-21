@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Changed
+- The name of the default structure is now 'default structure' instead of 'default template'.
+
+### Fixed
+- Information message after picking a template directory is now correct.
 
 
 ## [1.4.1] – 2025-08-21
