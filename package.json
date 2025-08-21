@@ -116,7 +116,7 @@
             },
             "default": [
               {
-                "name": "example template (edit in settings)",
+                "name": "example structure (edit in settings)",
                 "variables": [
                   {
                     "varName": "variable",
