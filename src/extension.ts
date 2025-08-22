@@ -38,8 +38,6 @@ export function activate(context: vscode.ExtensionContext) {
 			createNewFolder = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: 'Create a new folder?' }) === 'Yes';
 		}
 
-		const createdItems: string[] = [];
-
 		// Create new folder and change target path if createNewFolder is true
 		if (createNewFolder) {
 			const newFolderNameResult = await promptNewFolderName(targetPath, structureName);
@@ -47,7 +45,6 @@ export function activate(context: vscode.ExtensionContext) {
 				return;
 			}
 			targetPath = newFolderNameResult;
-			createdItems.push(targetPath);
 		}
 
 		// Get values for variables and optionals
@@ -58,6 +55,13 @@ export function activate(context: vscode.ExtensionContext) {
 		const { variables, optionals } = valuesResult;
 		console.log(variables);
 		console.log(optionals);
+
+		// Cancel file generation if user wants to
+		const revertCreation = await vscode.window.showInformationMessage(`Are you sure you want to generate ${structureStructure.length} items?\n\nExisting and invalid items will be skipped.`, { modal: true }, 'Yes') !== 'Yes';
+
+		if (revertCreation) {
+			return;
+		}
 
 		// Create new folder if needed
 		if (createNewFolder) {
@@ -75,15 +79,6 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 
 			// Add the item
-
-			// Add folders and files to arrays
-			const fileNameParts = fileName.split(/[\\/]/);
-			for (const i in fileNameParts) {
-				const itemPath = path.join(targetPath, ...fileNameParts.slice(0, Number(i) + 1));
-				if (!fs.existsSync(itemPath) && !createdItems.includes(itemPath)) {
-					createdItems.push(itemPath);
-				}
-			}
 
 			// Item is a folder
 			if (fileTemplate.toUpperCase() === 'FOLDER') {
@@ -110,24 +105,6 @@ export function activate(context: vscode.ExtensionContext) {
 			fs.mkdirSync(path.dirname(filePath), { recursive: true });
 			fs.writeFileSync(filePath, fileContent);
 		};
-
-		// Delete all created files and folders if user wants to
-		const revertCreation = await vscode.window.showInformationMessage(`Are you sure you want to create ${createdItems.length} items?`, { modal: true }, 'Yes') !== 'Yes';
-
-		if (revertCreation) {
-			for (const itemPath of createdItems.slice().reverse()) {
-				try {
-					fs.rmSync(itemPath, { recursive: true });
-				}
-				catch {
-					console.error(`Failed to remove ${itemPath}`);
-					if (!fs.existsSync(itemPath)) {
-						vscode.window.showErrorMessage(`Failed to remove ${itemPath}`);
-					}
-				}
-			}
-			return;
-		}
 
 		if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
 			vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(targetPath), false);
