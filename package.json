@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "icon": "resources/icon.png",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/Qualyyy/vscode-folder-template-generator.git"
@@ -116,7 +116,7 @@
             },
             "default": [
               {
-                "name": "example template (edit in settings)",
+                "name": "example structure (edit in settings)",
                 "variables": [
                   {
                     "varName": "variable",

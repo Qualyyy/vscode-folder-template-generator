@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [1.4.2] – 2025-08-22
+### Changed
+- The name of the default structure is now 'default structure' instead of 'default template'.
+- Moved cancellation prompt to occur before file creation:
+  - Files are no longer created and then deleted if user cancels.
+  - Command now exits cleanly without creating any files when cancelled.
+
+### Fixed
+- Information message after picking a template directory is now correct.
+- Await modal error message after nonexistent template to prevent command cancellation.
+
+
 ## [1.4.1] – 2025-08-21
 ### Added
 - Link to the google slides guide under 'How It Works' in the README.

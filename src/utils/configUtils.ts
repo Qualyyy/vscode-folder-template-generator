@@ -29,7 +29,7 @@ export async function getConfig(): Promise<{ structures: Structure[], templatesD
             if (templatesDirectoryUri?.[0]) {
                 templatesDirectory = templatesDirectoryUri[0].fsPath.replaceAll('\\', '/');
                 vscode.workspace.getConfiguration('folderTemplateGenerator').update('templatesDirectory', templatesDirectory, vscode.ConfigurationTarget.Global);
-                await vscode.window.showInformationMessage(`Updated templatesDirectory to ${templatesDirectory}.\n Select the parent folder for your project next.`, { modal: true });
+                await vscode.window.showInformationMessage(`Updated templatesDirectory to ${templatesDirectory}.`, { modal: true });
             }
             else {
                 await vscode.window.showErrorMessage('No directory selected', { modal: true });
