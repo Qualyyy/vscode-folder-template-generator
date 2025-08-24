@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### 🚨 BREAKING CHANGES
+- **Template syntax changed**: Variables and optionals must now use **double square brackets** `[[variableName]]` instead of single brackets `[variableName]`.  
+  - All existing templates and structure definitions need to be updated.  
+  - Prevents conflicts with literal square-bracket usage in code (arrays, CSS selectors, regex, etc.).
+
+### Changed
+- Documentation and README examples updated to use `[[variableName]]`.  
+- Regex in function createFileContent adjusted for parsing variables and optionals.
+
+### Removed
+- Legacy support for single-bracket `[variableName]` syntax.
 
 
 ## [1.4.2] – 2025-08-22

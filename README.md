@@ -9,7 +9,9 @@
 
 **Folder Template Generator** is a Visual Studio Code extension that lets you quickly scaffold project folders and files from customizable templates, with variable substitution, optional files/lines, and robust cross-platform validation.
 
-
+**⚠️ Version 2.0.0 BREAKING CHANGE**  
+Template variables now use **double square brackets** `[[var]]` instead of `[var]`.  
+See the [Changelog](CHANGELOG.md#200---2025-08-24) for details.
 
 ## Features
 
@@ -107,18 +109,18 @@ A string path to the directory containing your template files. Template files sh
 ## Example `indexHtml.html` template
 ```html
 <!DOCTYPE html>
-<html lang="[projectLanguage]">
+<html lang="[[projectLanguage]]">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/mainstyle.css">[addCss]
-    <script defer src="js/index.js"></script>[addJs]
-    <title>[projectName]</title>
+    <link rel="stylesheet" type="text/css" href="css/mainstyle.css">[[addCss]]
+    <script defer src="js/index.js"></script>[[addJs]]
+    <title>[[projectName]]</title>
 </head>
 
 <body>
-  <h1>[projectName]</h1>
+  <h1>[[projectName]]</h1>
 </body>
 
 </html>
@@ -127,9 +129,9 @@ A string path to the directory containing your template files. Template files sh
 ## Template Syntax
 
 - **Variables:**
-Use `[variableName]` in your template lines to have them replaced with user input.
+Use `[[variableName]]` in your template lines to have them replaced with user input.
 - **Optionals:**
-Use `[optionalKey]` at the end of a line in your template, or as `"optional": "key"` in your structure.
+Use `[[optionalKey]]` at the end of a line in your template, or as `"optional": "key"` in your structure.
 The user will be prompted to include/exclude these items.
 
 ## Validation \& Safety

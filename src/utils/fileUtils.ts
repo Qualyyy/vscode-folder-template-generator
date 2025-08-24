@@ -50,7 +50,7 @@ export function createFileContent(fileTemplatePath: string, variables: { [key: s
         let filteredParts: string[] = [];
 
         for (let part of contentParts) {
-            const matches = [...part.matchAll(/\[([a-zA-Z0-9_]+)\]/g)];
+            const matches = [...part.matchAll(/\[\[([a-zA-Z0-9_]+)\]\]/g)];
             let skipPart = false;
 
             if (matches) {
@@ -79,7 +79,7 @@ export function createFileContent(fileTemplatePath: string, variables: { [key: s
         // Replace variables with correct value
         if (variables) {
             for (const key in variables) {
-                const searchKey = '[' + key + ']';
+                const searchKey = '[[' + key + ']]';
                 fileContent = fileContent.replaceAll(searchKey, variables[key]);
             }
         }
