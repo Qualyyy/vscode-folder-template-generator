@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+
+## [2.0.0] – 2025-08-24
 ### 🚨 BREAKING CHANGES
 - **Template syntax changed**: Variables and optionals must now use **double square brackets** `[[variableName]]` instead of single brackets `[variableName]`.  
   - All existing templates and structure definitions need to be updated.  
