@@ -65,6 +65,9 @@
                 "name": {
                   "type": "string"
                 },
+                "createNewFolder": {
+                  "type": "boolean"
+                },
                 "variables": {
                   "type": "array",
                   "items": {
