@@ -1,5 +1,6 @@
 export interface Structure {
     name: string;
+    createNewFolder: boolean;
     variables?: Variable[];
     optionals?: Optional[];
     structure: StructureItem[];

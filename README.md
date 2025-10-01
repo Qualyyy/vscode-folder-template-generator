@@ -45,6 +45,7 @@ This extension contributes the following settings:
 An array of structure definitions. Each structure specifies:
 
 - `name`: The name of the structure (shown in the picker).
+- `createNewFolder`: Create a new folder upon generating a template. (optional)
 - `variables`: An array of objects, each with:
     - `varName`: The variable name to prompt for (e.g., `projectName`).
     - `default`: The default value to pre-fill in the input box.
@@ -66,6 +67,7 @@ A string path to the directory containing your template files. Template files sh
 "folderTemplateGenerator.structures": [
   {
     "name": "Website",
+    "createNewFolder": true, //Optional
     "variables": [
       { "varName": "projectName",
         "default": "My Website"

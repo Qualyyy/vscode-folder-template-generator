@@ -29,13 +29,19 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		const structureName = selectedStructure.name;
+		const structureCreateNewFolder = selectedStructure.createNewFolder;
 		const structureVariables = selectedStructure.variables || [];
 		const structureOptionals = selectedStructure.optionals || [];
 		const structureStructure = selectedStructure.structure || [];
 
 		// Ask user if they want to create a new folder
 		if (!createNewFolder) {
-			createNewFolder = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: 'Create a new folder?' }) === 'Yes';
+			if (structureCreateNewFolder !== undefined) {
+				createNewFolder = structureCreateNewFolder;
+			}
+			else {
+				createNewFolder = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: 'Create a new folder?' }) === 'Yes';
+			}
 		}
 
 		// Create new folder and change target path if createNewFolder is true
