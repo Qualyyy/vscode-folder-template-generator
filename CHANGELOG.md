@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - New optional property in structure overrides the 'create new folder' prompt.
   - Prompt still shows when property is not set.
 
+### Changed
+- Input box titles:
+  - New folder name prompt: 'Enter name for new folder'
+
+
 ## [2.0.0] – 2025-08-24
 ### 🚨 BREAKING CHANGES
 - **Template syntax changed**: Variables and optionals must now use **double square brackets** `[[variableName]]` instead of single brackets `[variableName]`.  

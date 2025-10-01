@@ -27,7 +27,7 @@ export async function promptStructureSelect(structures: any[]): Promise<Structur
 export async function promptNewFolderName(targetPath: string, structureName: string): Promise<string | null> {
     while (true) {
         let newFolderPath = '';
-        const folderName = await vscode.window.showInputBox({ title: 'folderName', value: structureName });
+        const folderName = await vscode.window.showInputBox({ title: 'Enter name for new folder', value: structureName });
         if (!folderName) { return null; }
         if (!isValidName(folderName)) {
             await vscode.window.showErrorMessage('Invalid folder name. Avoid special characters and reserved names', { modal: true });
