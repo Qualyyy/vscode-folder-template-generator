@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - createNewFolder property inside structures:
   - New optional property in structure overrides the 'create new folder' prompt.
   - Prompt still shows when property is not set.
+- Input box titles:
+  - Variable prompts: 'Enter value for ${name}'
 
 ### Changed
 - Input box titles:

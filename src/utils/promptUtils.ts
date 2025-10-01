@@ -50,7 +50,7 @@ export async function promptValues(structureVariables: Variable[], structureOpti
     const variables: { [key: string]: string } = {};
     if (structureVariables) {
         for (const variable of structureVariables) {
-            const value = await vscode.window.showInputBox({ prompt: variable.varName, value: variable.default });
+            const value = await vscode.window.showInputBox({ title: `Enter value for ${variable.varName}`, value: variable.default });
             if (!value) { return null; }
             variables[variable.varName] = value;
         }
