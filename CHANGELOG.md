@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- createNewFolder property inside structures.
+- createNewFolder property inside structures:
+  - New optional property in structure overrides the 'create new folder' prompt.
+  - Prompt still shows when property is not set.
 
 ## [2.0.0] – 2025-08-24
 ### 🚨 BREAKING CHANGES
