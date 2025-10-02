@@ -20,6 +20,7 @@ A VS Code extension by Qualyyy
   - [Three Ways to Generate](#three-ways-to-generate)
   - [Generation Process](#generation-process)
   - [Example Generation Flow:](#example-generation-flow)
+- [Troubleshooting](#troubleshooting)
 - [Credits](#credits)
 
 ## How to Use
@@ -269,6 +270,19 @@ my-awesome-site/
 ├── images/
 └── index.html
 ```
+
+## Troubleshooting
+
+If the extension doesn't work as expected:
+
+1. **Check your settings.json** - Ensure your structure configuration is valid JSON
+2. **Verify template directory** - Make sure the path exists and contains your template files
+3. **Review structure syntax** - Double-check property names and structure format
+4. **Check the README** - Additional information and examples
+5. **Report bugs** - Open an issue on GitHub for bugs
+6. **Get help** - Contact through Discord for questions and feedback
+
+> **Note**: Please keep in mind I am a beginner developer. This is my first “big” and published project. Before making this extension, I had no experience using typescript, making extensions and publishing projects at all.
 
 ## Credits
 Created by Qualyyy
