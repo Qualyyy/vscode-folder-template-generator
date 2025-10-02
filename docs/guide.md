@@ -20,6 +20,7 @@ A VS Code extension by Qualyyy
   - [Three Ways to Generate](#three-ways-to-generate)
   - [Generation Process](#generation-process)
   - [Example Generation Flow:](#example-generation-flow)
+- [Credits](#credits)
 
 ## How to Use
 
@@ -268,3 +269,12 @@ my-awesome-site/
 ├── images/
 └── index.html
 ```
+
+## Credits
+Created by Qualyyy
+
+- [**GitHub Repository**](https://github.com/Qualyyy/vscode-folder-template-generator)
+- [**VS Code Marketplace**](https://marketplace.visualstudio.com/items?itemName=Qualyyy.folder-template-generator)
+- **Discord**: qualyyy 
+
+Thanks for your support! 🎉
