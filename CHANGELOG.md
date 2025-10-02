@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [2.2.0] – 2025-10-02
+### Added
+- Tracking skipped items:
+  - Information message shows amount of created and skipped items.
+  - Button to view what items got skipped, if any got skipped.
+  - Overview of skipped items and the reason for the skip when button gets clicked.
+- Pluralization in messages according to item count (e.g., "1 item", "2 items").
+
+### Removed
+- Information message for each separate skipped file.
+
+
 ## [2.1.2] – 2025-10-02
 ### Added
 - Modal error message when there are no files in the selected structure.
