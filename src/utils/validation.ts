@@ -51,6 +51,7 @@ export async function validateConfig(structures: Structure[], templatesDirectory
 
 export async function isValidStructure(structure: Structure): Promise<boolean> {
     const structureVariables = structure.variables || [];
+    const structureOptionals = structure.optionals || [];
     const structureStructure = structure.structure || [];
 
     // Exit if duplicate variable
@@ -61,6 +62,16 @@ export async function isValidStructure(structure: Structure): Promise<boolean> {
             return false;
         }
         uniqueVariables.add(variable.varName);
+    }
+
+    // Exit if duplicate optional
+    const uniqueOptionals = new Set<string>();
+    for (const optional of structureOptionals) {
+        if (uniqueOptionals.has(optional.optName)) {
+            vscode.window.showErrorMessage(`Duplicate optional '${optional.optName}'. Please update your structure`, { modal: true });
+            return false;
+        }
+        uniqueOptionals.add(optional.optName);
     }
 
     // Exit if duplicate file
