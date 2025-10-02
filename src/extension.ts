@@ -117,7 +117,13 @@ export function activate(context: vscode.ExtensionContext) {
 			fs.writeFileSync(filePath, fileContent);
 		};
 
-		const showSkippedItems = vscode.window.showInformationMessage(`Successfully created ${createdItemsCount} items and skipped ${skippedItems.length} items.`, 'Show skipped items');
+		const showSkippedItems = await vscode.window.showInformationMessage(`Successfully created ${createdItemsCount} items and skipped ${skippedItems.length} items.`, 'Show skipped items', 'OK') === 'Show skipped items';
+
+		if (showSkippedItems) {
+			let skippedItemsOverview: string = 'Skipped items:';
+			skippedItems.forEach(item => skippedItemsOverview += `\n- ${item}`);
+			await vscode.window.showInformationMessage(skippedItemsOverview, { modal: true });
+		}
 
 		if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
 			vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(targetPath), false);
