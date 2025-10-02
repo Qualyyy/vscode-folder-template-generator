@@ -52,7 +52,13 @@ export async function validateConfig(structures: Structure[], templatesDirectory
 export async function isValidStructure(structure: Structure): Promise<boolean> {
     const structureVariables = structure.variables || [];
     const structureOptionals = structure.optionals || [];
-    const structureStructure = structure.structure || [];
+    const structureStructure = structure.structure;
+
+    // Exit if structure doesn't have any files
+    if (!structureStructure) {
+        vscode.window.showErrorMessage('This structure doesn\'t have any files. Please update your structure', { modal: true });
+        return false;
+    }
 
     // Exit if duplicate variable
     const uniqueVariables = new Set<string>();
