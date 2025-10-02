@@ -75,7 +75,7 @@ export async function promptValues(structureVariables: Variable[], structureOpti
 
 export async function promptShowSkippedItems(skippedItems: { [key: string]: string }, createdItemsCount: number) {
     if (skippedItems) {
-        const showSkippedItems = await vscode.window.showInformationMessage(`Successfully created ${createdItemsCount} items and skipped ${skippedItems.length} items.`, 'Show overview', 'OK') === 'Show overview';
+        const showSkippedItems = await vscode.window.showInformationMessage(`Successfully created ${createdItemsCount} items and skipped ${Object.keys(skippedItems).length} items.`, 'Show overview', 'OK') === 'Show overview';
 
         if (showSkippedItems) {
             let skippedItemsOverview: string = 'Skipped items:';
