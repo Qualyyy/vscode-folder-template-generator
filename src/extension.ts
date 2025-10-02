@@ -75,6 +75,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		const skippedItems: string[] = [];
+		let createdItemsCount: number = 0;
 
 		// Create a new file/folder for every item in the structure
 		for (const item of structureStructure) {
@@ -113,7 +114,10 @@ export function activate(context: vscode.ExtensionContext) {
 			// Create the file
 			fs.mkdirSync(path.dirname(filePath), { recursive: true });
 			fs.writeFileSync(filePath, fileContent);
+			createdItemsCount += 1;
 		};
+
+		const showSkippedItems = vscode.window.showInformationMessage(`Succesfully created ${createdItemsCount} items and skipped ${skippedItems.length} items.`, 'Show skipped items');
 
 		if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
 			vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(targetPath), false);

@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-  - Tracking skipped items.
+  - Tracking skipped items:
+    - Information message shows amount of created and skipped items.
 
 
 ## [2.1.2] – 2025-10-02
