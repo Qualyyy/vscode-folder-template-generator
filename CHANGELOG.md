@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - guide.md:
   - Added an extended guide to the project. This replaces the google slides guide I made earlier.
 
+### Changed
+- Link in README to step-by-step guide now goes to the new 'guide.md'.
+
 
 ## [2.2.0] – 2025-10-02
 ### Added
