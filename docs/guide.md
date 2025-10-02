@@ -5,6 +5,7 @@ A VS Code extension by Qualyyy
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
+- [How to Use](#how-to-use)
 - [1. Creating Structures](#1-creating-structures)
   - [Required Properties](#required-properties)
   - [Optional Properties](#optional-properties)
@@ -20,6 +21,13 @@ A VS Code extension by Qualyyy
   - [Generation Process](#generation-process)
   - [Example Generation Flow:](#example-generation-flow)
 
+## How to Use
+
+This extension helps you quickly generate folder and file structures with customizable templates. The process involves three main steps:
+
+1. **Creating structures** - Define what files and folders you want
+2. **Creating file templates** - Design template files with variables
+3. **Generating a structure** - Use your templates to create new projects
 
 ## 1. Creating Structures
 
