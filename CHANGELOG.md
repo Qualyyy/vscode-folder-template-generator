@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Tracking skipped items:
   - Information message shows amount of created and skipped items.
   - Button to view what items got skipped, if any got skipped.
+  - Overview of skipped items and the reason for the skip when button gets clicked.
 
 ### Removed
 - Information message for each separate skipped file.
