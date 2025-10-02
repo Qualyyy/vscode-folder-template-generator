@@ -74,6 +74,8 @@ export function activate(context: vscode.ExtensionContext) {
 			fs.mkdirSync(targetPath);
 		}
 
+		const skippedItems: string[] = [];
+
 		// Create a new file/folder for every item in the structure
 		for (const item of structureStructure) {
 			const fileName = item.fileName;
@@ -81,6 +83,7 @@ export function activate(context: vscode.ExtensionContext) {
 			const filePath = path.join(targetPath, fileName);
 
 			if (skipFile(item, filePath, optionals)) {
+				skippedItems.push(fileName);
 				continue;
 			}
 
