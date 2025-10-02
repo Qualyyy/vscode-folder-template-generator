@@ -117,7 +117,7 @@ export function activate(context: vscode.ExtensionContext) {
 			fs.writeFileSync(filePath, fileContent);
 		};
 
-		const showSkippedItems = vscode.window.showInformationMessage(`Succesfully created ${createdItemsCount} items and skipped ${skippedItems.length} items.`, 'Show skipped items');
+		const showSkippedItems = vscode.window.showInformationMessage(`Successfully created ${createdItemsCount} items and skipped ${skippedItems.length} items.`, 'Show skipped items');
 
 		if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
 			vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(targetPath), false);
