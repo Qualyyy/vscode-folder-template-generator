@@ -74,11 +74,15 @@ export async function promptValues(structureVariables: Variable[], structureOpti
 }
 
 export async function promptShowSkippedItems(skippedItems: string[], createdItemsCount: number) {
-    const showSkippedItems = await vscode.window.showInformationMessage(`Successfully created ${createdItemsCount} items and skipped ${skippedItems.length} items.`, 'Show skipped items', 'OK') === 'Show skipped items';
+    if (skippedItems.length) {
+        const showSkippedItems = await vscode.window.showInformationMessage(`Successfully created ${createdItemsCount} items and skipped ${skippedItems.length} items.`, 'Show overview', 'OK') === 'Show overview';
 
-    if (showSkippedItems) {
-        let skippedItemsOverview: string = 'Skipped items:';
-        skippedItems.forEach(item => skippedItemsOverview += `\n- ${item}`);
-        await vscode.window.showInformationMessage(skippedItemsOverview, { modal: true });
+        if (showSkippedItems) {
+            let skippedItemsOverview: string = 'Skipped items:';
+            skippedItems.forEach(item => skippedItemsOverview += `\n- ${item}`);
+            await vscode.window.showInformationMessage(skippedItemsOverview, { modal: true });
+        }
+    } else {
+        vscode.window.showInformationMessage(`Successfully created ${createdItemsCount} items.`);
     }
 }
