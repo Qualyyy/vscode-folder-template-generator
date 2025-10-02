@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 import { StructureItem } from '../types';
 import { isValidName } from './validation';
 
-export function skipFile(item: StructureItem, filePath: string, optionals: { [key: string]: boolean; }): boolean {
+export function skipFile(item: StructureItem, filePath: string, optionals: { [key: string]: boolean; }): string {
     const fileName = item.fileName;
 
     // Check for invalid parts in fileName
@@ -18,25 +18,22 @@ export function skipFile(item: StructureItem, filePath: string, optionals: { [ke
 
     // Skip item if the name is invalid
     if (invalidPart) {
-        vscode.window.showErrorMessage(`Skipping ${fileName}, fileName is invalid. Avoid special characters and reserved names. Please update your template`);
-        return true;
+        return 'Invalid fileName. Avoid special characters and reserved names. Please update your template';
     }
 
     // Skip item if optional false
     if (item.optional) {
         if (item.optional in optionals && !optionals[item.optional]) {
-            vscode.window.showInformationMessage(`Skipped ${fileName}`);
-            return true;
+            return 'optional = false';
         }
     }
 
     // Skip items if exists
     if (fs.existsSync(filePath)) {
-        vscode.window.showInformationMessage(`${fileName} already exists, skipping...`);
-        return true;
+        return 'Item already exists';
     }
 
-    return false;
+    return '';
 }
 
 export function createFileContent(fileTemplatePath: string, variables: { [key: string]: string }, optionals: { [key: string]: boolean }): string {

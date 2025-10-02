@@ -5,7 +5,7 @@ import { getTargetPath } from './utils/pathUtils';
 import { isValidName, isValidStructure, validateConfig } from './utils/validation';
 import { createFileContent, skipFile } from './utils/fileUtils';
 import { getConfig } from './utils/configUtils';
-import { promptNewFolderName, promptStructureSelect, promptValues } from './utils/promptUtils';
+import { promptNewFolderName, promptShowSkippedItems, promptStructureSelect, promptValues } from './utils/promptUtils';
 
 export function activate(context: vscode.ExtensionContext) {
 	let disposable = vscode.commands.registerCommand('folder-template-generator.generateTemplate', async (Uri?: vscode.Uri) => {
@@ -74,17 +74,23 @@ export function activate(context: vscode.ExtensionContext) {
 			fs.mkdirSync(targetPath);
 		}
 
+		const skippedItems: { [key: string]: string } = {};
+		let createdItemsCount: number = 0;
+
 		// Create a new file/folder for every item in the structure
 		for (const item of structureStructure) {
 			const fileName = item.fileName;
 			const fileTemplate = item.template || '';
 			const filePath = path.join(targetPath, fileName);
 
-			if (skipFile(item, filePath, optionals)) {
+			const skipMessage = skipFile(item, filePath, optionals);
+			if (skipMessage) {
+				skippedItems[fileName] = skipMessage;
 				continue;
 			}
 
 			// Add the item
+			createdItemsCount += 1;
 
 			// Item is a folder
 			if (fileTemplate.toUpperCase() === 'FOLDER') {
@@ -111,6 +117,8 @@ export function activate(context: vscode.ExtensionContext) {
 			fs.mkdirSync(path.dirname(filePath), { recursive: true });
 			fs.writeFileSync(filePath, fileContent);
 		};
+
+		await promptShowSkippedItems(skippedItems, createdItemsCount);
 
 		if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
 			vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(targetPath), false);
