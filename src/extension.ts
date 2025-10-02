@@ -89,6 +89,7 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 
 			// Add the item
+			createdItemsCount += 1;
 
 			// Item is a folder
 			if (fileTemplate.toUpperCase() === 'FOLDER') {
@@ -114,7 +115,6 @@ export function activate(context: vscode.ExtensionContext) {
 			// Create the file
 			fs.mkdirSync(path.dirname(filePath), { recursive: true });
 			fs.writeFileSync(filePath, fileContent);
-			createdItemsCount += 1;
 		};
 
 		const showSkippedItems = vscode.window.showInformationMessage(`Succesfully created ${createdItemsCount} items and skipped ${skippedItems.length} items.`, 'Show skipped items');
