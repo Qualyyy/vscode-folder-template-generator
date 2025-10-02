@@ -63,7 +63,7 @@ export function activate(context: vscode.ExtensionContext) {
 		console.log(optionals);
 
 		// Cancel file generation if user wants to
-		const revertCreation = await vscode.window.showInformationMessage(`Are you sure you want to generate ${structureStructure.length} items?\n\nExisting and invalid items will be skipped.`, { modal: true }, 'Yes') !== 'Yes';
+		const revertCreation = await vscode.window.showInformationMessage(`Are you sure you want to generate ${structureStructure.length} item${structureStructure.length !== 1 ? 's' : ''}?\n\nExisting and invalid items will be skipped.`, { modal: true }, 'Yes') !== 'Yes';
 
 		if (revertCreation) {
 			return;
