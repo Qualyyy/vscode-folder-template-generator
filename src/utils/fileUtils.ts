@@ -62,14 +62,19 @@ export function createFileContent(fileTemplatePath: string, variables: { [key: s
         fileContent = filteredParts.join('\n');
 
         // Replace variables with correct value
-        if (variables) {
-            for (const key in variables) {
-                const searchKey = '[[' + key + ']]';
-                fileContent = fileContent.replaceAll(searchKey, variables[key]);
-            }
-        }
+        fileContent = replaceVariables(fileContent, variables);
     }
     return fileContent;
+}
+
+function replaceVariables(content: string, variables: { [key: string]: string }) {
+    if (variables) {
+        for (const key in variables) {
+            const searchKey = '[[' + key + ']]';
+            content = content.replaceAll(searchKey, variables[key]);
+        }
+    }
+    return content;
 }
 
 export function getVariables(templateContent: string): Variable[] {
