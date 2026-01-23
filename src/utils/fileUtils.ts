@@ -4,6 +4,13 @@ import * as path from 'path';
 import { directoryItem, Optional, StructureItem, Variable } from '../types';
 import { isValidName, validatePathParts } from './validation';
 
+export function getFileName(fileName: string, variables: { [key: string]: string }): string {
+    if (fileName.match(/\[\[(.*?)\]\]/)) {
+        fileName = replaceVariables(fileName, variables);
+    }
+    return fileName;
+}
+
 export function skipFile(item: StructureItem, filePath: string, optionals: { [key: string]: boolean; }): string {
     const fileName = item.fileName;
 
