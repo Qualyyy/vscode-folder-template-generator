@@ -8,6 +8,8 @@ export function applyCase(input: string, caseType: string): string {
             return input.toUpperCase();
         case 'camelcase':
             return toCamelCase(input);
+        case 'pascalcase':
+            return toPascalCase(input);
         default:
             return input;
     }
@@ -26,5 +28,12 @@ function toCamelCase(input: string): string {
         .split(' ')
         .map((word, i) =>
             i === 0 ? word.toLowerCase() : titleCaseWord(word))
+        .join('');
+}
+
+function toPascalCase(input: string): string {
+    return input
+        .split(' ')
+        .map(titleCaseWord)
         .join('');
 }
