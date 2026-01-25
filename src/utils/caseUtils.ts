@@ -14,6 +14,8 @@ export function applyCase(input: string, caseType: string): string {
             return toKebabCase(input);
         case 'snakecase':
             return toSnakeCase(input);
+        case 'titlecase':
+            return toTitleCase(input);
         default:
             return input;
     }
@@ -52,4 +54,11 @@ function toSnakeCase(input: string): string {
     return input
         .toLowerCase()
         .replaceAll(' ', '_');
+}
+
+function toTitleCase(input: string): string {
+    return input
+        .split(' ')
+        .map(titleCaseWord)
+        .join(' ');
 }
