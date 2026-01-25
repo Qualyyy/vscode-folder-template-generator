@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import { directoryItem, Optional, StructureItem, Variable } from '../types';
 import { isValidName, validatePathParts } from './validation';
+import { applyCase } from './caseUtils';
 
 export function getFileName(fileName: string, variables: { [key: string]: string }): string {
     fileName = replaceVariables(fileName, variables);
@@ -77,8 +78,11 @@ function replaceVariables(content: string, variables: { [key: string]: string })
 
     for (const match of variableMatches) {
         const varName = match[1];
-        const varValue = variables[varName];
+        let varValue = variables[varName];
         const varCase = match[2];
+        if (varCase) {
+            varValue = applyCase(varValue, varCase);
+        }
 
         content = content.replace(match[0], varValue);
     }
