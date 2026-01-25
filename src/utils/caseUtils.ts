@@ -17,14 +17,14 @@ function cleanString(string: string): string {
     return string.replace(/ +/g, ' ').trim();
 }
 
+function titleCaseWord(word: string): string {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
 function toCamelCase(input: string): string {
     return input
         .split(' ')
         .map((word, i) =>
             i === 0 ? word.toLowerCase() : titleCaseWord(word))
         .join('');
-}
-
-function titleCaseWord(word: string): string {
-    return word.charAt(0).toUpperCase() + word.slice(1);
 }
