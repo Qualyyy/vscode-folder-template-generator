@@ -3,6 +3,8 @@
 ## Overview
 Use `[[variable | caseType]]` syntax to automatically format your project names, file names, and other text.
 
+**Case type is case insensitive and may contain spaces.**
+
 ## Available Case Types
 
 | Case Type            | Syntax                              | Example Input | Result       |

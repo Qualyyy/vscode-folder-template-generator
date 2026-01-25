@@ -74,7 +74,7 @@ export function createFileContent(fileTemplatePath: string, variables: { [key: s
 }
 
 function replaceVariables(content: string, variables: { [key: string]: string }) {
-    const variableMatches = [...content.matchAll(/\[\[([a-zA-Z0-9_]+)(?:\s*\|\s*([a-zA-Z0-9_]+))?\]\]/g)];
+    const variableMatches = [...content.matchAll(/\[\[([a-zA-Z0-9_]+)(?:\s*\|\s*([a-zA-Z0-9_\s]+))?\]\]/g)];
 
     for (const match of variableMatches) {
         const varName = match[1];
