@@ -17,6 +17,7 @@ Use `[[variable | caseType]]` syntax to automatically format your project names,
 | `snakecase`          | `[[project \| snakecase]]`          | "My Project"  | `my_project` |
 | `screamingsnakecase` | `[[project \| screamingsnakecase]]` | "My Project"  | `MY_PROJECT` |
 | `titlecase`          | `[[project \| titlecase]]`          | "My Project"  | `My Project` |
+| `sentencecase`       | `[[project \| sentencecase]]`       | "My project"  | `My project` |
 
 ## Usage Examples
 

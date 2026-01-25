@@ -18,6 +18,8 @@ export function applyCase(input: string, caseType: string): string {
             return toScreamingSnakeCase(input);
         case 'titlecase':
             return toTitleCase(input);
+        case 'sentencecase':
+            return toSentenceCase(input);
         default:
             return input;
     }
@@ -68,5 +70,13 @@ function toTitleCase(input: string): string {
     return input
         .split(' ')
         .map(titleCaseWord)
+        .join(' ');
+}
+
+function toSentenceCase(input: string): string {
+    return input
+        .split(' ')
+        .map((word, i) =>
+            i === 0 ? titleCaseWord(word) : word.toLowerCase())
         .join(' ');
 }
