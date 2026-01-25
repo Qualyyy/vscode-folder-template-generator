@@ -46,7 +46,7 @@ An array of structure definitions. Each structure specifies:
     - `default`: The default value to pre-fill in the input box.
 - `optionals`: An array of string keys for optional features (e.g., `addCss`).
 - `structure`: An array of items, each with:
-    - `fileName`: The file or folder path (relative to the workspace root).
+    - `fileName`: The file or folder path (relative to the workspace root, can contain variables).
     - `template`: The template to use (for files), or `"folder"` for folders.
     - `optional`: *(optional)* A key that makes this item optional, shown as a prompt.
 
@@ -100,7 +100,7 @@ If you previously used "Folder Template Generator":
         "template": "indexHtml.html"
       },
       {
-        "fileName": "css/mainstyle.css",
+        "fileName": "css/[[projectName]].css",
         "template": "mainstyleCss.css",
         "optional": "addCss"
       },

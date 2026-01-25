@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { getTargetPath } from '../utils/pathUtils';
 import { isValidStructure, validateConfigStructures, validateConfigTemplatesDirectory } from '../utils/validation';
-import { createFileContent, skipFile } from '../utils/fileUtils';
+import { createFileContent, getFileName, skipFile } from '../utils/fileUtils';
 import { getConfig } from '../utils/configUtils';
 import { promptItemName, promptShowSkippedItems, promptStructureSelect, promptValues } from '../utils/promptUtils';
 
@@ -77,7 +77,7 @@ export async function generateTemplateCommand(Uri?: vscode.Uri) {
 
     // Create a new file/folder for every item in the structure
     for (const item of structureStructure) {
-        const fileName = item.fileName;
+        const fileName = getFileName(item.fileName, variables);
         const fileTemplate = item.template || '';
         const filePath = path.join(targetPath, fileName);
 
