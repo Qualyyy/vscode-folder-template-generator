@@ -1,7 +1,7 @@
 export function applyCase(input: string, caseType: string): string {
     input = cleanString(input);
 
-    switch (caseType.toLowerCase()) {
+    switch (caseType?.toLowerCase()) {
         case 'lowercase':
             return input.toLowerCase();
         case 'uppercase':
