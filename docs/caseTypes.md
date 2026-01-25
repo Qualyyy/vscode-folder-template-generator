@@ -9,8 +9,9 @@ Use `[[variable | caseType]]` syntax to automatically format your project names,
 
 | Case Type              | Syntax                              | Example Input | Result        |
 | ---------------------- | ----------------------------------- | ------------- | ------------- |
-| `lowercase`            | `[[project \| lowercase]]`          | "Hello World" | `hello world` |
-| `UPPERCASE`            | `[[project \| uppercase]]`          | "Hello World" | `HELLO WORLD` |
+| `lower case`           | `[[project \| lowercase]]`          | "Hello World" | `hello world` |
+| `UPPER CASE`           | `[[project \| uppercase]]`          | "Hello World" | `HELLO WORLD` |
+| `flatcase`             | `[[project \| flatcase]]`           | "Hello World" | `helloworld`  |
 | `camelCase`            | `[[project \| camelcase]]`          | "Hello World" | `helloWorld`  |
 | `PascalCase`           | `[[project \| pascalcase]]`         | "Hello World" | `HelloWorld`  |
 | `kebab-case`           | `[[project \| kebabcase]]`          | "Hello World" | `hello-world` |
