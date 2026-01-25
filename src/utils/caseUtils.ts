@@ -1,4 +1,4 @@
-export function applyCase(input: string, caseType: string) {
+export function applyCase(input: string, caseType: string): string {
     input = cleanString(input);
 
     switch (caseType.toLowerCase()) {
@@ -13,11 +13,11 @@ export function applyCase(input: string, caseType: string) {
     }
 }
 
-function cleanString(string: string) {
+function cleanString(string: string): string {
     return string.replace(/ +/g, ' ').trim();
 }
 
-function toCamelCase(input: string) {
+function toCamelCase(input: string): string {
     return input
         .split(' ')
         .map((word, i) =>
@@ -25,6 +25,6 @@ function toCamelCase(input: string) {
         .join('');
 }
 
-function titleCaseWord(word: string) {
+function titleCaseWord(word: string): string {
     return word.charAt(0).toUpperCase() + word.slice(1);
 }
