@@ -1,4 +1,4 @@
-# # Custom Template Generator - Case Types
+# Custom Template Generator - Case Types Guide
 
 ## Overview
 Use `[[variable | caseType]]` syntax to automatically format your project names, file names, and other text.
