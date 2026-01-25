@@ -1,4 +1,8 @@
 export function applyCase(input: string, caseType: string) {
-    console.log(input, ":", caseType);
-    return input;
+    switch (caseType.toLowerCase()) {
+        case 'lowercase':
+            return input.toLowerCase();
+        default:
+            return input;
+    }
 }
