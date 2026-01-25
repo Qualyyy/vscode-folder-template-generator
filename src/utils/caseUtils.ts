@@ -18,7 +18,7 @@ function cleanString(string: string): string {
 }
 
 function titleCaseWord(word: string): string {
-    return word.charAt(0).toUpperCase() + word.slice(1);
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 }
 
 function toCamelCase(input: string): string {
