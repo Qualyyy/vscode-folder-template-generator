@@ -10,6 +10,8 @@ export function applyCase(input: string, caseType: string): string {
             return toCamelCase(input);
         case 'pascalcase':
             return toPascalCase(input);
+        case 'kebabcase':
+            return toKebabCase(input);
         default:
             return input;
     }
@@ -36,4 +38,10 @@ function toPascalCase(input: string): string {
         .split(' ')
         .map(titleCaseWord)
         .join('');
+}
+
+function toKebabCase(input: string): string {
+    return input
+        .toLowerCase()
+        .replaceAll(' ', '-');
 }
