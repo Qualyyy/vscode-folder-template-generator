@@ -14,6 +14,8 @@ export function applyCase(input: string, caseType: string): string {
             return toKebabCase(input);
         case 'snakecase':
             return toSnakeCase(input);
+        case 'screamingsnakecase':
+            return toScreamingSnakeCase(input);
         case 'titlecase':
             return toTitleCase(input);
         default:
@@ -53,6 +55,12 @@ function toKebabCase(input: string): string {
 function toSnakeCase(input: string): string {
     return input
         .toLowerCase()
+        .replaceAll(' ', '_');
+}
+
+function toScreamingSnakeCase(input: string): string {
+    return input
+        .toUpperCase()
         .replaceAll(' ', '_');
 }
 

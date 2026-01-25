@@ -5,15 +5,16 @@ Use `[[variable | caseType]]` syntax to automatically format your project names,
 
 ## Available Case Types
 
-| Case Type    | Syntax                      | Example Input | Result       |
-| ------------ | --------------------------- | ------------- | ------------ |
-| `lowercase`  | `[[project \| lowercase]]`  | "My Project"  | `my project` |
-| `uppercase`  | `[[project \| uppercase]]`  | "My Project"  | `MY PROJECT` |
-| `camelcase`  | `[[project \| camelcase]]`  | "My Project"  | `myProject`  |
-| `pascalcase` | `[[project \| pascalcase]]` | "My Project"  | `MyProject`  |
-| `kebabcase`  | `[[project \| kebabcase]]`  | "My Project"  | `my-project` |
-| `snakecase`  | `[[project \| snakecase]]`  | "My Project"  | `my_project` |
-| `titlecase`  | `[[project \| titlecase]]`  | "My Project"  | `My Project` |
+| Case Type            | Syntax                              | Example Input | Result       |
+| -------------------- | ----------------------------------- | ------------- | ------------ |
+| `lowercase`          | `[[project \| lowercase]]`          | "My Project"  | `my project` |
+| `uppercase`          | `[[project \| uppercase]]`          | "My Project"  | `MY PROJECT` |
+| `camelcase`          | `[[project \| camelcase]]`          | "My Project"  | `myProject`  |
+| `pascalcase`         | `[[project \| pascalcase]]`         | "My Project"  | `MyProject`  |
+| `kebabcase`          | `[[project \| kebabcase]]`          | "My Project"  | `my-project` |
+| `snakecase`          | `[[project \| snakecase]]`          | "My Project"  | `my_project` |
+| `screamingsnakecase` | `[[project \| screamingsnakecase]]` | "My Project"  | `MY_PROJECT` |
+| `titlecase`          | `[[project \| titlecase]]`          | "My Project"  | `My Project` |
 
 ## Usage Examples
 
