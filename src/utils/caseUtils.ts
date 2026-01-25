@@ -8,6 +8,8 @@ export function applyCase(input: string, caseType: string): string {
             return input.toUpperCase();
         case 'flatcase':
             return toFlatCase(input);
+        case 'upperflatcase':
+            return toUpperFlatCase(input);
         case 'camelcase':
             return toCamelCase(input);
         case 'pascalcase':
@@ -38,6 +40,12 @@ function titleCaseWord(word: string): string {
 function toFlatCase(input: string): string {
     return input
         .toLowerCase()
+        .replaceAll(' ', '');
+}
+
+function toUpperFlatCase(input: string): string {
+    return input
+        .toUpperCase()
         .replaceAll(' ', '');
 }
 
