@@ -12,6 +12,8 @@ export function applyCase(input: string, caseType: string): string {
             return toPascalCase(input);
         case 'kebabcase':
             return toKebabCase(input);
+        case 'snakecase':
+            return toSnakeCase(input);
         default:
             return input;
     }
@@ -44,4 +46,10 @@ function toKebabCase(input: string): string {
     return input
         .toLowerCase()
         .replaceAll(' ', '-');
+}
+
+function toSnakeCase(input: string): string {
+    return input
+        .toLowerCase()
+        .replaceAll(' ', '_');
 }
