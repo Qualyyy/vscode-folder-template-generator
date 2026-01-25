@@ -51,7 +51,7 @@ Example:
 #### `structure`
 This contains all the files you want in this structure. A structure item can have 1 to 3 properties:
 
-- `fileName` - The name/path of the file or folder (required)
+- `fileName` - The name/path of the file or folder (required, can contain [variables](#variables))
 - `template` - The template file to use for this item
 - `optional` - Makes this item optional (user can choose yes/no)
 
@@ -64,7 +64,7 @@ Example:
     "template": "index.html"
   },
   {
-    "fileName": "css/style.css",
+    "fileName": "css/[[projectName]].css",
     "template": "style.css",
     "optional": "addCss"
   },
@@ -88,7 +88,7 @@ Example:
 If you didn't include this property, you will get prompted whether to create a new folder.
 
 #### `variables`
-Each variable requires a name and a default value. In your file templates, you can use any variables you want. The extension will prompt you for values when generating a structure.
+Each variable requires a name and a default value. In your file templates, you can use any variables you want. The extension will prompt you for values when generating a structure. Variables can also be used in the `fileName` property of a structure item.
 
 Example:
 
@@ -156,7 +156,7 @@ Here's a complete example structure that demonstrates all features:
         "template": "index.html"
       },
       {
-        "fileName": "css/style.css",
+        "fileName": "css/[[projectName]].css",
         "template": "style.css",
         "optional": "addCss"
       },
