@@ -1,11 +1,11 @@
-import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { getTargetPath } from '../utils/pathUtils';
-import { isValidStructure, validateConfigStructures, validateConfigTemplatesDirectory } from '../utils/validation';
-import { createFileContent, getFileName, skipFile } from '../utils/fileUtils';
+import * as vscode from 'vscode';
 import { getConfig } from '../utils/configUtils';
+import { createFileContent, getFileName, skipFile } from '../utils/fileUtils';
+import { getTargetPath } from '../utils/pathUtils';
 import { promptItemName, promptShowSkippedItems, promptStructureSelect, promptValues } from '../utils/promptUtils';
+import { isValidStructure, validateConfigStructures, validateConfigTemplatesDirectory } from '../utils/validation';
 
 export async function generateTemplateCommand(Uri?: vscode.Uri) {
     // Get the user's set structures and templatesDirectory

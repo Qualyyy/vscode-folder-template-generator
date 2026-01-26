@@ -1,11 +1,11 @@
-import * as vscode from 'vscode';
 import * as fs from 'fs';
+import * as path from 'path';
+import * as vscode from 'vscode';
 import { getConfig } from '../utils/configUtils';
-import { validateConfigTemplatesDirectory } from '../utils/validation';
+import { createFileContent, getOptionals, getVariables } from '../utils/fileUtils';
 import { getTargetPath } from '../utils/pathUtils';
 import { promptItemName, promptTemplateSelect, promptValues } from '../utils/promptUtils';
-import * as path from 'path';
-import { createFileContent, getOptionals, getVariables } from '../utils/fileUtils';
+import { validateConfigTemplatesDirectory } from '../utils/validation';
 
 export async function generateFileCommand(Uri?: vscode.Uri) {
     // Get the user's set templatesDirectory

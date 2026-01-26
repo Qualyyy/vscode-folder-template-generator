@@ -1,9 +1,9 @@
 import * as fs from 'fs';
-import * as vscode from 'vscode';
 import * as path from 'path';
+import * as vscode from 'vscode';
 import { directoryItem, Optional, StructureItem, Variable } from '../types';
-import { isValidName, validatePathParts } from './validation';
 import { applyCase } from './caseUtils';
+import { validatePathParts } from './validation';
 
 export function getFileName(fileName: string, variables: { [key: string]: string }): string {
     fileName = replaceVariables(fileName, variables);

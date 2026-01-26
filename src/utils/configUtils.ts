@@ -1,5 +1,5 @@
-import * as vscode from 'vscode';
 import * as fs from 'fs';
+import * as vscode from 'vscode';
 import { Structure } from '../types';
 
 export async function getConfig(): Promise<{ structures: Structure[], templatesDirectory: string }> {
