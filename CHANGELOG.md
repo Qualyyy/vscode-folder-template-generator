@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Replacing of variables in files and filenames is now more efficient.
+- Extension icon updated to cropped transparent version and without text.
 
 
 ## [1.1.0] - 2026-01-25
