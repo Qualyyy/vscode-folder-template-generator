@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import { directoryItem, Optional, StructureItem, Variable } from '../types';
 import { isValidName, validatePathParts } from './validation';
+import { applyCase } from './caseUtils';
 
 export function getFileName(fileName: string, variables: { [key: string]: string }): string {
     fileName = replaceVariables(fileName, variables);
@@ -73,11 +74,13 @@ export function createFileContent(fileTemplatePath: string, variables: { [key: s
 }
 
 function replaceVariables(content: string, variables: { [key: string]: string }) {
-    const variableMatches = [...content.matchAll(/\[\[([a-zA-Z0-9_]+)\]\]/g)];
+    const variableMatches = [...content.matchAll(/\[\[([a-zA-Z0-9_]+)(?:\s*\|\s*([a-zA-Z0-9_\s]+))?\]\]/g)];
 
     for (const match of variableMatches) {
         const varName = match[1];
-        const varValue = variables[varName];
+        const varCase = match[2];
+        const varValue = applyCase(variables[varName], varCase);
+
         content = content.replace(match[0], varValue);
     }
     return content;

@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Added
+- **Case types**:
+  - Variables in templates or fileNames now support case types.
+  - Examples (input: my awesome project):
+    - `[[projectName | kebabcase]].html` &rarr; `index-my-awesome-project.html`
+    - `[[projectName | pascalcase]]Component` &rarr; `MyAwesomeProjectComponent`
+  - [Case Types Guide](https://github.com/Qualyyy/vscode-custom-template-generator/blob/master/docs/caseTypes.md) lists all available types.
+
 ### Changed
 - Replacing of variables in files and filenames is now more efficient.
 
