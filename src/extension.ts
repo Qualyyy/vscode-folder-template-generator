@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
-import { generateTemplateCommand } from './commands/generateTemplate';
-import { generateFileCommand } from './commands/generateFile';
 import { editTemplatesCommand } from './commands/editTemplates';
+import { generateFileCommand } from './commands/generateFile';
+import { generateTemplateCommand } from './commands/generateTemplate';
 
 export function activate(context: vscode.ExtensionContext) {
 

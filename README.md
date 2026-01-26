@@ -15,6 +15,7 @@
 - **Generate individual files** from local templates.
 - **Customizable templates:** Define your own folder structures in your VS Code settings and create local file templates.
 - **Variable prompts with defaults:** When generating a structure, the extension prompts you for variables (like project name or language) and automatically replaces them in your templates. Each variable can have a default value. These can be set in the folder structures.
+- **Case conversion support:** Use `[[varName | caseType]]` syntax (camelCase, kebab-case, PascalCase, [etc.](https://github.com/Qualyyy/vscode-custom-template-generator/blob/master/docs/caseTypes.md)) for perfect naming.
 - **Optional files and template lines:** Use `[[?optionalKey]]` markers in your templates and structures to conditionally include files or lines.
 - **Cross-platform validation:** Prevents creation of files or folders with invalid or reserved names.
 - **Supports both files and folders:** Easily specify which items are folders or files in your structure.
@@ -133,7 +134,7 @@ If you previously used "Folder Template Generator":
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/mainstyle.css">[[?addCss]]
     <script defer src="js/index.js"></script>[[?addJs]]
-    <title>[[projectName]]</title>
+    <title>[[projectName | titleCase]]</title>
 </head>
 
 <body>

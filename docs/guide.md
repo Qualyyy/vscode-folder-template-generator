@@ -88,7 +88,11 @@ Example:
 If you didn't include this property, you will get prompted whether to create a new folder.
 
 #### `variables`
-Each variable requires a name and a default value. In your file templates, you can use any variables you want. The extension will prompt you for values when generating a structure. Variables can also be used in the `fileName` property of a structure item.
+Each variable requires a name and a default value. In your file templates, you can use any variables you want. The extension will prompt you for values when generating a structure. Variables can also be used in the `fileName` property of a structure item. (form: `[[varName]]`)
+
+If you want to use the same value multiple times but with a different case, or need a certain variable to always use a certain case, you can add the type to the variable in your templates and/or fileName. (form: `[[varName | caseType]]`)
+
+[Case Types Guide](https://github.com/Qualyyy/vscode-custom-template-generator/blob/master/docs/caseTypes.md) lists all available types.
 
 Example:
 
@@ -211,7 +215,7 @@ Example template: index.html
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/style.css">[[?addCss]]
     <script defer src="js/index.js"></script>[[?addJs]]
-    <title>[[projectName]]</title>
+    <title>[[projectName | titleCase]]</title>
 </head>
 
 <body>

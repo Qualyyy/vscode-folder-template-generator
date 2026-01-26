@@ -1,9 +1,9 @@
-import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as vscode from 'vscode';
 import { Optional, Structure, Variable } from '../types';
-import { validatePathParts } from './validation';
 import { getDirectoryContent } from './fileUtils';
+import { validatePathParts } from './validation';
 
 export async function promptStructureSelect(structures: any[]): Promise<Structure | null> {
     const structureNames = structures.map(structure => structure.name);

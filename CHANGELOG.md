@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [1.2.0] - 2026-01-26
+### Added
+- **Case types**:
+  - Variables in templates and fileNames now support case types.
+  - Examples (input: my awesome project):
+    - `[[projectName | kebabcase]].html` &rarr; `index-my-awesome-project.html`
+    - `[[projectName | pascalcase]]Component` &rarr; `MyAwesomeProjectComponent`
+  - [Case Types Guide](https://github.com/Qualyyy/vscode-custom-template-generator/blob/master/docs/caseTypes.md) lists all available types.
+
+### Changed
+- Replacing of variables in files and filenames is now more efficient.
+- Extension icon updated to cropped transparent version and without text.
+
+
 ## [1.1.0] - 2026-01-25
 ### Added
 - Variables in fileName:
