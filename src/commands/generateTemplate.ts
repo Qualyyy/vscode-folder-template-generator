@@ -124,7 +124,7 @@ export async function generateTemplateCommand(Uri?: vscode.Uri) {
     }
 
     if (createNewFolder) {
-        const openNewFolder = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `Open new folder?` }) === 'Yes';
+        const openNewFolder = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: 'Open new folder?' }) === 'Yes';
         if (openNewFolder) {
             vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(targetPath), true);
         }
