@@ -12,8 +12,7 @@ export async function getConfig(): Promise<{ structures: Structure[], templatesD
         let errorMessage = '';
         if (templatesDirectory.trim() === '') {
             errorMessage = 'No template directory configured.\nPlease set "customTemplateGenerator.templatesDirectory" in your settings.';
-        }
-        else {
+        } else {
             errorMessage = `The configured templates directory was not found: "${templatesDirectory}".\nPlease update "customTemplateGenerator.templatesDirectory" in your settings.`;
         }
         templatesDirectory = '';
@@ -30,8 +29,7 @@ export async function getConfig(): Promise<{ structures: Structure[], templatesD
                 templatesDirectory = templatesDirectoryUri[0].fsPath.replaceAll('\\', '/');
                 vscode.workspace.getConfiguration('customTemplateGenerator').update('templatesDirectory', templatesDirectory, vscode.ConfigurationTarget.Global);
                 await vscode.window.showInformationMessage(`Updated templatesDirectory to ${templatesDirectory}.`, { modal: true });
-            }
-            else {
+            } else {
                 await vscode.window.showErrorMessage('No directory selected', { modal: true });
             }
         }

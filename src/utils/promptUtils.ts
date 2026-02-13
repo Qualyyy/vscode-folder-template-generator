@@ -57,7 +57,9 @@ export async function promptTemplateSelect(templatesDirectory: string): Promise<
 export async function promptItemName(targetPath: string, defaultValue: string, type: string): Promise<string | null> {
     while (true) {
         const itemName = await vscode.window.showInputBox({ title: `Enter name for new ${type.toLowerCase()}`, value: defaultValue });
-        if (!itemName) { return null; }
+        if (!itemName) {
+            return null;
+        }
         if (!validatePathParts(itemName)) {
             await vscode.window.showErrorMessage(`Invalid ${type.toLowerCase()} name. Avoid special characters and reserved names`, { modal: true });
             continue;
@@ -80,7 +82,9 @@ export async function promptValues(structureVariables: Variable[], structureOpti
     if (structureVariables) {
         for (const variable of structureVariables) {
             const value = await vscode.window.showInputBox({ title: `Enter value for ${variable.varName}`, value: variable.default });
-            if (!value) { return null; }
+            if (!value) {
+                return null;
+            }
             variables[variable.varName] = value;
         }
     }
@@ -90,7 +94,9 @@ export async function promptValues(structureVariables: Variable[], structureOpti
     if (structureOptionals) {
         for (const optional of structureOptionals) {
             const addItem = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `${optional.optName}?` });
-            if (addItem === undefined) { return null; }
+            if (addItem === undefined) {
+                return null;
+            }
             if (addItem === 'Yes') {
                 optionals[optional.optName] = true; // Add these items
                 continue;
