@@ -6,7 +6,8 @@ export default [
         files: ["**/*.ts"],
 
         rules: {
-            "quotes": ["warn", "single"]
+            "quotes": ["warn", "single"],
+            "brace-style": ["warn", "1tbs", { "allowSingleLine": false }]
         }
     },
     {
