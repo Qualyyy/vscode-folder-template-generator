@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { directoryItem, Optional, StructureItem, Variable } from '../types';
+import { directoryItem, Optional, Variable } from '../types';
 import { applyCase } from './caseUtils';
 import { validatePathParts } from './validation';
 
@@ -10,8 +10,7 @@ export function getFileName(fileName: string, variables: { [key: string]: string
     return fileName;
 }
 
-export function skipFile(item: StructureItem, filePath: string, optionals: { [key: string]: boolean; }): string {
-    const fileName = item.fileName;
+export function skipFile(fileName: string, filePath: string, optionalKey: string | undefined, optionals: { [key: string]: boolean; }): string {
 
     // Skip item if the name is invalid
     if (!validatePathParts(fileName)) {
@@ -19,8 +18,8 @@ export function skipFile(item: StructureItem, filePath: string, optionals: { [ke
     }
 
     // Skip item if optional false
-    if (item.optional) {
-        if (item.optional in optionals && !optionals[item.optional]) {
+    if (optionalKey) {
+        if (optionalKey in optionals && !optionals[optionalKey]) {
             return 'optional = false';
         }
     }
