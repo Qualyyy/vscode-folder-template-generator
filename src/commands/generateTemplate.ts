@@ -80,7 +80,7 @@ export async function generateTemplateCommand(Uri?: vscode.Uri) {
         const fileTemplate = item.template || '';
         const filePath = path.join(targetPath, fileName);
 
-        const skipMessage = skipFile(item, filePath, optionals);
+        const skipMessage = skipFile(fileName, filePath, item.optional, optionals);
         if (skipMessage) {
             skippedItems[fileName] = skipMessage;
             continue;
