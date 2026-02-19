@@ -77,7 +77,7 @@ function replaceVariables(content: string, variables: { [key: string]: string })
 
     for (const match of variableMatches) {
         const varName = match[1];
-        const varCase = match[2];
+        const varCase = match[2] || '';
         const varValue = applyCase(variables[varName], varCase);
 
         content = content.replace(match[0], varValue);
