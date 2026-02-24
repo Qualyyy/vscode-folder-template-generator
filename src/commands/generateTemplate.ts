@@ -36,8 +36,7 @@ export async function generateTemplateCommand(Uri?: vscode.Uri) {
     if (!createNewFolder) {
         if (structureCreateNewFolder !== undefined) {
             createNewFolder = structureCreateNewFolder;
-        }
-        else {
+        } else {
             createNewFolder = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: 'Create a new folder?' }) === 'Yes';
         }
     }
@@ -81,7 +80,7 @@ export async function generateTemplateCommand(Uri?: vscode.Uri) {
         const fileTemplate = item.template || '';
         const filePath = path.join(targetPath, fileName);
 
-        const skipMessage = skipFile(item, filePath, optionals);
+        const skipMessage = skipFile(fileName, filePath, item.optional, optionals);
         if (skipMessage) {
             skippedItems[fileName] = skipMessage;
             continue;
@@ -105,8 +104,7 @@ export async function generateTemplateCommand(Uri?: vscode.Uri) {
             if (!fs.existsSync(fileTemplatePath)) {
                 await vscode.window.showErrorMessage(`Could not find template "${fileTemplatePath}".\nPlease verify that the file exists and update your settings.json if needed.`, { modal: true });
                 vscode.window.showInformationMessage(`Empty file "${fileName}" created (template not found)`);
-            }
-            else {
+            } else {
                 fileContent = createFileContent(fileTemplatePath, variables, optionals);
             }
         }
@@ -124,7 +122,7 @@ export async function generateTemplateCommand(Uri?: vscode.Uri) {
     }
 
     if (createNewFolder) {
-        const openNewFolder = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: `Open new folder?` }) === 'Yes';
+        const openNewFolder = await vscode.window.showQuickPick(['Yes', 'No'], { placeHolder: 'Open new folder?' }) === 'Yes';
         if (openNewFolder) {
             vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(targetPath), true);
         }

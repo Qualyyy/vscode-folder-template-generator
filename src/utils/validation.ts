@@ -10,10 +10,18 @@ export function isValidName(name: string): boolean {
         'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9'
     ];
 
-    if (!name || name.trim().length === 0) { return false; }
-    if (forbidden.test(name)) { return false; }
-    if (name.endsWith(' ') || name.endsWith('.')) { return false; }
-    if (reservedNames.includes(name.toUpperCase())) { return false; }
+    if (!name || name.trim().length === 0) {
+        return false;
+    }
+    if (forbidden.test(name)) {
+        return false;
+    }
+    if (name.endsWith(' ') || name.endsWith('.')) {
+        return false;
+    }
+    if (reservedNames.includes(name.toUpperCase())) {
+        return false;
+    }
 
     return true;
 }
